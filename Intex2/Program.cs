@@ -22,7 +22,8 @@ builder.Services.AddControllersWithViews();
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-SecretClientOptions options = new SecretClientOptions()
+//UNCOMMENT THIS BEFORE PUSHING
+/*SecretClientOptions options = new SecretClientOptions()
 {
     Retry =
         {
@@ -33,12 +34,13 @@ SecretClientOptions options = new SecretClientOptions()
          }
 };
 var client = new SecretClient(new Uri("https://intex2oauthkeyvaultpt2.vault.azure.net/"), new DefaultAzureCredential(), options);
-KeyVaultSecret GoogleClientSecret = client.GetSecret("GoogleClientSecret");
+KeyVaultSecret GoogleClientSecret = client.GetSecret("GoogleClientSecret");*/
 
 services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = GoogleClientSecret.Value;
+    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"]; //REMOVE BEFORE PUSHING
+    //googleOptions.ClientSecret = GoogleClientSecret.Value; //UNCOMMENT BEFORE PUSHING
 });
 
 var app = builder.Build();

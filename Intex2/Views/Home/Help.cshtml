@@ -1,5 +1,104 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<style>
+    .pill-input {
+        border: 1px solid #ccc;
+        border-radius: 30px; /* Adjust the value for desired roundness */
+        padding: 8px 12px;
+        width: 100%; /* Adjust as needed */
+        box-sizing: border-box;
+    }
+    .pill-text-area {
+        border: 1px solid #ccc;
+        border-radius: 30px; /* Adjust the value for desired roundness */
+        padding: 8px 12px;
+        width: 100%; /* Adjust as needed */
+        box-sizing: border-box;
+    }
+</style>
+
+<div class="row">
+    <div class="col-6">
+        <br />
+        <h1 style="font-weight:bold; color: #5b64d1">FAQ's</h1>
+        <br />
+            <div style="font-weight:bold">
+                How can I place an order?
+            </div>
+            To place an order, simply browse our collection of LEGO sets, select the ones you want, and proceed to checkout. Follow the prompts to complete your order.
+
+        <div style="font-weight:bold">
+                What payment methods do you accept?
+            </div>
+            We accept various payment methods, including credit/debit cards, PayPal, and other secure online payment options.
+
+        <div style="font-weight:bold">
+                How long does it take to process and ship orders?
+            </div>
+            Orders are typically processed within 1-2 business days. Shipping times vary based on your location and chosen shipping method.
+
+        <div style="font-weight:bold">
+                Do you offer international shipping?
+            </div>
+            Yes, we offer international shipping to many countries. Shipping fees and delivery times may vary for international orders.
+
+        <div style="font-weight:bold">
+                Can I track my order?
+            </div>
+            Yes, you will receive a tracking number once your order is shipped. You can use this number to track your package's delivery status.
+
+        <div style="font-weight:bold">
+                What if my LEGO set arrives damaged or is missing pieces?
+            </div>
+            We strive to ensure the quality of every order. If your LEGO set arrives damaged or is missing pieces, please contact our customer support team for assistance.
+
+        <div style="font-weight:bold">
+                Can I cancel or modify my order after it's placed?
+            </div>
+            Orders can be canceled or modified within a certain time frame after placing the order. Please contact us as soon as possible if you need to make changes to your order.
+
+        <div style="font-weight:bold">
+                Do you offer refunds or exchanges?
+            </div>
+            We offer refunds or exchanges for items returned in their original condition within a specified return period. Please review our return policy for more details.
+
+        <div style="font-weight:bold">
+                Are your LEGO sets authentic?
+            </div>
+            Yes, all our LEGO sets are authentic and sourced from reputable distributors.
+
+        <div style="font-weight:bold">
+                Do you offer discounts or promotions?
+            </div>
+            We occasionally offer discounts, promotions, and special deals. Be sure to sign up for our newsletter or follow us on social media to stay updated on the latest offers.
+
+        <div style="font-weight:bold">
+                Can I pre-order upcoming LEGO sets?
+            </div>
+            Yes, we may offer pre-orders for select upcoming LEGO sets. Check our website or contact us for information about pre-order availability.
+
+        <div style="font-weight:bold">
+                How can I contact customer support?
+            </div>
+            You can reach our customer support team via email, phone, or through the contact form on our website. We're here to assist you with any questions or concerns.
+        </div>
+        <div class="col-1">
+
+        </div>
+    <div class="col-5">
+        <br />
+        <h1 style="font-weight:bold; color: #5b64d1">Contact Us</h1>
+        <br />
+        <form method="post">
+            <input type="text" class="pill-input" placeholder="First Name" />
+            <br /><br />
+            <input type="text" class="pill-input" placeholder="Last Name" />
+            <br /><br />
+            <input type="text" class="pill-input" placeholder="Email" />
+            <br /><br />
+            <label style="font-size: small; color: dimgrey;">What can we help you with?</label>
+            <br />
+            <textarea id="multiline-input" name="multiline" class="pill-text-area" rows="8"></textarea>
+            <br /> <br />
+            <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; padding: 10px 20px; font-size: 16px; display: block; margin: 0 auto;" class="rounded-pill">Submit</button>
+        </form>
+    </div>
+</div>
