@@ -22,10 +22,23 @@ builder.Services.AddControllersWithViews();
 var services = builder.Services;
 var configuration = builder.Configuration;
 
+SecretClientOptions options = new SecretClientOptions()
+{
+    Retry =
+        {
+            Delay= TimeSpan.FromSeconds(2),
+            MaxDelay = TimeSpan.FromSeconds(16),
+            MaxRetries = 5,
+            Mode = RetryMode.Exponential
+         }
+};
+var client = new SecretClient(new Uri("https://intex2oauthkeyvaultpt2.vault.azure.net/"), new DefaultAzureCredential(), options);
+KeyVaultSecret GoogleClientSecret = client.GetSecret("GoogleClientSecret");
+
 services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientSecret = GoogleClientSecret.Value;
 });
 
 var app = builder.Build();
@@ -50,19 +63,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-SecretClientOptions options = new SecretClientOptions()
-{
-    Retry =
-        {
-            Delay= TimeSpan.FromSeconds(2),
-            MaxDelay = TimeSpan.FromSeconds(16),
-            MaxRetries = 5,
-            Mode = RetryMode.Exponential
-         }
-};
-var client = new SecretClient(new Uri("https://intexiioauthkeys.vault.azure.net/"), new DefaultAzureCredential(), options);
-KeyVaultSecret secret = client.GetSecret("<mySecret>");
-string secretValue = secret.Value;
+
 
 app.MapControllerRoute(
     name: "default",
