@@ -1,5 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@* @model ----
+ *@
+<style>
+    .pill-input {
+        border: 1px solid #ccc;
+        border-radius: 30px; /* Adjust the value for desired roundness */
+        padding: 8px 12px;
+        width: 100%; /* Adjust as needed */
+        box-sizing: border-box;
+    }
+
+    .pill-text-area {
+        border: 1px solid #ccc;
+        border-radius: 30px; /* Adjust the value for desired roundness */
+        padding: 8px 12px;
+        width: 100%; /* Adjust as needed */
+        box-sizing: border-box;
+    }
+</style>
+
+<h1>Sign In</h1>
+
+<form method="post">
+@*     <input type="hidden" asp-for="customer_ID" />
+ *@
+@*     <label asp-for="username"></label>
+ *@    <input type="text" class="pill-input" placeholder="Username/Email" />
+    <br /><br />
+@*     <label asp-for="password"></label>
+ *@    <input type="password" class="pill-input" placeholder="Password" />
+    <br /><br />
+    <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; padding: 10px 20px; font-size: 16px; display: block; margin: 0 auto;" class="rounded-pill">Sign In</button>
+    <div style="color: #5b64d1;" class="text-center">
+        <a asp-area="" asp-controller="Home" asp-action="SignUp">Don't have an account? <u>Sign Up</u></a>
+    </div>
+</form>
