@@ -6,8 +6,22 @@ using System;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Core;
+using Intex2.Models;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ILegoRepository, EFLegoRepository>();
+
+builder.Services.AddRazorPages();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
+//builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -22,26 +36,48 @@ builder.Services.AddControllersWithViews();
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-//UNCOMMENT THIS BEFORE PUSHING
-/*SecretClientOptions options = new SecretClientOptions()
+if (builder.Environment.IsDevelopment())
 {
-    Retry =
-        {
-            Delay= TimeSpan.FromSeconds(2),
-            MaxDelay = TimeSpan.FromSeconds(16),
-            MaxRetries = 5,
-            Mode = RetryMode.Exponential
-         }
-};
-var client = new SecretClient(new Uri("https://intex2oauthkeyvaultpt2.vault.azure.net/"), new DefaultAzureCredential(), options);
-KeyVaultSecret GoogleClientSecret = client.GetSecret("GoogleClientSecret");*/
+    // If a development env, then use the secrets.json for key vault authentication
+    builder.Configuration.AddUserSecrets<Program>();
 
-services.AddAuthentication().AddGoogle(googleOptions =>
+    var clientId = configuration["KeyVault:ClientId"];
+    var tenantId = configuration["KeyVault:TenantId"];
+    var clientSecret = configuration["KeyVault:ClientSecret"];
+
+    // Creates a secret client
+    var client = new SecretClient(
+        new Uri("https://intex2oauthkeyvaultpt2.vault.azure.net/"),
+        new ClientSecretCredential(tenantId, clientId, clientSecret)
+    );
+
+    // Authenticates with Google
+    KeyVaultSecret GoogleClientSecret = client.GetSecret("GoogleClientSecret");
+    services.AddAuthentication().AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = GoogleClientSecret.Value;
+    });
+} else
 {
-    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"]; //REMOVE BEFORE PUSHING
-    //googleOptions.ClientSecret = GoogleClientSecret.Value; //UNCOMMENT BEFORE PUSHING
-});
+   SecretClientOptions options = new SecretClientOptions()
+    {
+        Retry =
+            {
+                Delay= TimeSpan.FromSeconds(2),
+                MaxDelay = TimeSpan.FromSeconds(16),
+                MaxRetries = 5,
+                Mode = RetryMode.Exponential
+             }
+    };
+    var client = new SecretClient(new Uri("https://intex2oauthkeyvaultpt2.vault.azure.net/"), new DefaultAzureCredential(), options);
+    KeyVaultSecret GoogleClientSecret = client.GetSecret("GoogleClientSecret");
+    services.AddAuthentication().AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = GoogleClientSecret.Value;
+    });
+}
 
 var app = builder.Build();
 
@@ -67,9 +103,11 @@ app.UseAuthorization();
 
 
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute("pagenumandtype", "{projectType}/{pageNum}", new { Conroller = "Home", action = "Index" });
+app.MapControllerRoute("projectType", "{projectType}", new { Controller = "Home", action = "Index", pageNum = 1 });
+app.MapControllerRoute("pagination", "Projects/{pageNum}", new { Controller = "Home", action = "Index" });
+app.MapDefaultControllerRoute();
+
 app.MapRazorPages();
 
 app.Run();

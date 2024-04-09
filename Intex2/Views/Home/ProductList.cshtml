@@ -1,5 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Product List";
 }
+
+@model ProductListViewModel
+
+<h1>Lego</h1>
+@foreach (Product p in Model.Products)
+{
+
+    <partial name="ProductSummary" model="p" />
+
+}
+
+
+<div page-model="@Model.PaginationInfo" page-action="ProductList" page-class-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+     page-url-projectType="@Model.CurrentProductType"
+     class="btn-group pull-right m-1">
+</div>
