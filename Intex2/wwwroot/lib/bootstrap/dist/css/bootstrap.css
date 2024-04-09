@@ -3962,13 +3962,14 @@ textarea.form-control-lg {
 }
 
 .navbar {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+    background-color: #A5A5A5 !important;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 .navbar > .container,
 .navbar > .container-fluid,
@@ -4369,6 +4370,12 @@ textarea.form-control-lg {
   flex-grow: 0;
   padding: 0;
   overflow-y: visible;
+}
+
+.navbar-light.custom-bg {
+    background-color: #A5A5A5 !important;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .navbar-light .navbar-brand {
