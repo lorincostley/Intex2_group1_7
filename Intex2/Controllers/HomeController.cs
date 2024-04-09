@@ -22,7 +22,7 @@ namespace Intex2.Controllers
             return View();
         }
 
-        public IActionResult ProductList(int pageNum, string? projectType)
+        public IActionResult ProductList(int pageNum, string? productType)
         {
             int pageSize = 2;
 
@@ -41,7 +41,7 @@ namespace Intex2.Controllers
                     TotalItems = productType == null ? _repo.Products.Count() : _repo.Products.Where(x => x.ProductType == productType).Count()
                 },
 
-                CurrentProductType = projectType
+                CurrentProductType = productType
             };
             return View(blah);
         }
