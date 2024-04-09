@@ -2,6 +2,10 @@ using Intex2.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
+using System;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +49,20 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+SecretClientOptions options = new SecretClientOptions()
+{
+    Retry =
+        {
+            Delay= TimeSpan.FromSeconds(2),
+            MaxDelay = TimeSpan.FromSeconds(16),
+            MaxRetries = 5,
+            Mode = RetryMode.Exponential
+         }
+};
+var client = new SecretClient(new Uri("https://intexiioauthkeys.vault.azure.net/"), new DefaultAzureCredential(), options);
+KeyVaultSecret secret = client.GetSecret("<mySecret>");
+string secretValue = secret.Value;
 
 app.MapControllerRoute(
     name: "default",
