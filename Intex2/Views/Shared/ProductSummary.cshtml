@@ -13,7 +13,7 @@
     </ul>
     <form id=@Model.ProductId method="post" asp-page="/Cart">
         <input type="hidden" asp-for="ProductId" />
-        <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+        @* <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" /> *@
         <button type="submit" class="btn-outline-success btn-small float-end">Donate</button>
     </form>
 </div>
