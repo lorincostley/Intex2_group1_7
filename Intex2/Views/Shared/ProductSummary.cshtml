@@ -1,0 +1,19 @@
+﻿@using Intex2.Infrastructure
+
+@model Product
+
+<div class="card m-1 p-1">
+    <h3>
+        @Model.ProductName
+        <span class="badge rounded-pill bg-primary text-white float-end">
+        </span>
+    </h3>
+    <ul>
+        <li>Product Type: @Model.ProductType</li>
+    </ul>
+    <form id=@Model.ProductId method="post" asp-page="/Cart">
+        <input type="hidden" asp-for="ProductId" />
+        @* <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" /> *@
+        <button type="submit" class="btn-outline-success btn-small float-end">Donate</button>
+    </form>
+</div>
