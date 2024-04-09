@@ -1,4 +1,5 @@
 using Intex2.Models;
+using Intex2.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,17 +8,42 @@ namespace Intex2.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private ILegoRepository _repo;
+
+        public HomeController(ILegoRepository temp)
         {
-            _logger = logger;
-        }
+            _repo = temp;
+        } 
 
         [Authorize]
         public IActionResult Secrets()
         {
             return View();
+        }
+
+        public IActionResult ProductList(int pageNum, string? projectType)
+        {
+            int pageSize = 2;
+
+            var blah = new ProductListViewModel
+            {
+                Products = _repo.Products
+                    .Where(x => x.ProductType == productType || productType == null)
+                    .OrderBy(x => x.ProductName)
+                    .Skip(pageSize * (pageNum - 1))
+                    .Take(pageSize),
+
+                PaginationInfo = new PaginationInfo
+                {
+                    CurrentPage = pageNum,
+                    ItemsPerPage = pageSize,
+                    TotalItems = productType == null ? _repo.Products.Count() : _repo.Products.Where(x => x.ProductType == productType).Count()
+                },
+
+                CurrentProductType = projectType
+            };
+            return View(blah);
         }
 
         public IActionResult Index()
