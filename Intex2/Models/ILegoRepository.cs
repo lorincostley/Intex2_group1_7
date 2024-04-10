@@ -1,6 +1,6 @@
 ﻿namespace Intex2.Models
 {
-    public class ILegoRepository
+    public interface ILegoRepository
     {
         public IQueryable<Product> Products { get; }
     }
