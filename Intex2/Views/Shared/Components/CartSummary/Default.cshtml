@@ -16,8 +16,10 @@
         </small>
     }
 
-   @*  <a class="btn btn-small btn-secondary navbar-btn" asp-page="/Cart"
-       asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()"> *@
-        <i class="fa fa-shopping-cart"></i>
-    </a>
+    <a class="btn" asp-page="/Cart"
+       asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()"> 
+        <img src="~/shoppingcart.jpeg.png" style="height: 35px;" />
+@*         <i class="fa fa-shopping-cart"></i>
+        btn-small btn-secondary navbar-btn
+ *@    </a>
 </div>
