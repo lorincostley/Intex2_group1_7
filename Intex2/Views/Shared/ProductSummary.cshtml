@@ -2,18 +2,19 @@
 
 @model Product
 
-<div class="card m-1 p-1">
+<div class="col mb-5">
+    <div class="card h-100" style="height: 100px">
     <h3>
         @Model.Name
-        <span class="badge rounded-pill bg-primary text-white float-end">
-        </span>
     </h3>
+    <img class="card-img-top h-100" src="~/SimpleLegoMan.jpg" />
     <ul>
         <li>Product Type: @Model.Category</li>
     </ul>
     <form id=@Model.ProductId method="post" asp-page="/Cart">
         <input type="hidden" asp-for="ProductId" />
         @* <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" /> *@
-        <button type="submit" class="btn-outline-success btn-small float-end">Donate</button>
+        <button type="submit" class="btn-outline-success btn-small float-end">Add to Cart</button>
     </form>
+    </div>
 </div>

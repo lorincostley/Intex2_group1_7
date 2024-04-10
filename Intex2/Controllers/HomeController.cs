@@ -3,6 +3,8 @@ using Intex2.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace Intex2.Controllers
 {
@@ -24,7 +26,7 @@ namespace Intex2.Controllers
 
         public IActionResult ProductList(int pageNum, string? productType)
         {
-            int pageSize = 2;
+            int pageSize = 9;
 
             var blah = new ProductListViewModel
             {
@@ -114,11 +116,20 @@ namespace Intex2.Controllers
         {
             return View();
         }
-        public IActionResult ProductList()
+        public IActionResult SignUp()
         {
             return View();
         }
-        public IActionResult SignUp()
+
+        public IActionResult Admin_Orders()
+        {
+            return View();
+        }
+        public IActionResult Admin_Products()
+        {
+            return View();
+        }
+        public IActionResult Admin_Users()
         {
             return View();
         }

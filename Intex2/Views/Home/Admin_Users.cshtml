@@ -1,0 +1,56 @@
+﻿@*USERS*@
+
+<br />
+<div class="row">
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Home" asp-action="Admin_Products" style="text-align:center; color:black; font-size:large">Products</a>
+    </div>
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Home" asp-action="Admin_Users" style="text-align:center; color:black; font-size:larger; font-weight:bold">Users</a>
+    </div>
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Home" asp-action="Admin_Orders" style="text-align:center; color:black; font-size:large">Orders</a>
+    </div>
+</div>
+
+<br />
+<br />
+<div>
+    <table class="table table-bordered"> 
+        <thead>
+            <tr>
+                <td>Customer ID</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Birth Date</td>
+                <td>Country</td>
+                <td>Gender</td>
+                <td>Age</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+
+        </thead>
+
+        @*         @foreach (var x in Model)
+        {
+        <tbody>
+        <tr>
+        CHANGE THESE TO CORRECT VARs
+        <td>@x.customer_ID</td>
+        <td>@x.first_name</td>
+        <td>@x.last_name</td>
+        <td>@x.birth_date</td>
+        <td>@x.country_of_residence</td>
+        <td>@x.gender</td>
+        <td>@x.age</td>
+
+        ADD ICONS
+        <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.customer_ID">Accept</a></td>
+        <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.customer_ID">Deny</a></td> ADD A DELETE CONFIRMATION PAGE/WINDOW
+        </tr>
+        </tbody>
+        } *@
+
+    </table>
+</div>

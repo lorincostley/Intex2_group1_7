@@ -1,0 +1,63 @@
+﻿@*PRODUCTS*@
+
+<br />
+<div class="row">
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Home" asp-action="Admin_Products" style="text-align:center; color:black; font-size:larger; font-weight:bold">Products</a>
+    </div>
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Home" asp-action="Admin_Users" style="text-align:center; color:black; font-size:large">Users</a>
+    </div>
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Home" asp-action="Admin_Orders" style="text-align:center; color:black; font-size:large">Orders</a>
+    </div>
+</div>
+
+<br /> 
+<br />
+<div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Product ID</td>
+                <td>Name</td>
+                <td>Year</td>
+                <td># of Parts</td>
+                <td>Price</td>
+                <td>Image</td>
+                <td>Primary Color</td>
+                <td>Secondary Color</td>
+                <td>Description</td>
+                <td>Category</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+
+        </thead>
+
+        @*         @foreach (var x in Model)
+        {
+        <tbody>
+        <tr>
+        CHANGE THESE TO CORRECT VARs
+        <td>@x.product_ID</td>
+        <td>@x.name</td>
+        <td>@x.year</td>
+        <td>@x.num_parts</td>
+        <td>@x.price</td>
+        <td>@x.img_link</td>
+        <td>@x.primary_color</td>
+        <td>@x.secondary_color</td>
+        <td>@x.description</td>
+        <td>@x.category</td>
+
+
+        ADD ICONS
+        <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.customer_ID">Edit</a></td>
+        <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.customer_ID">Delete</a></td> ADD A DELETE CONFIRMATION PAGE/WINDOW
+        </tr>
+        </tbody>
+        } *@
+
+    </table>
+</div>

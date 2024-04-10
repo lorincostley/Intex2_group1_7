@@ -1,5 +1,62 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<style>
+    .center-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative; /* Required for absolute positioning */
+    }
+
+    .rotate-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        object-fit: cover; /* Ensures the image covers the container */
+        transform: rotate(90deg);
+    }
+
+    .content {
+        text-align: center;
+        background-color: white;
+        padding: 20px;
+        outline-style: solid; /* Style of the outline */
+        outline-color: lightgray; /* Color of the outline */
+        outline-width: 2px; /* Width of the outline */
+    }
+</style>
+
+
+
+<body>
+    <br />
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10 center-image">
+            <div class="content">
+                <h1>About Us</h1>
+                <br>
+                Welcome to Aurora Brickwell's world of bricks, where imagination meets creation! Aurora Brickwell isn't just your average Lego™ enthusiast; she's a renowned collector and master builder with a passion for bringing dreams to life, one brick at a time.
+                <br /><br />
+                <div class="center-image">
+                    <img src="~/aurora.png" height="500" />
+                </div>
+                <br /><br />
+                With a vast social media following and a distributor license with The Lego Group™, Aurora has carved out a unique niche in the world of Lego™. Through her social media channels and appearances at trade shows, she has connected with Lego™ enthusiasts worldwide, sharing her love for the iconic bricks and offering a curated selection of sets and designs.
+                <br /><br />
+                Driven by her vision to expand her reach and offer her unique creations to a broader audience, Aurora has embarked on an exciting journey to launch her very own online storefront. Leveraging her extensive dataset of products, customers, and orders meticulously curated in an Excel spreadsheet, Aurora aims to create an immersive web app-based shopping experience that seamlessly integrates with her existing sales channels.
+                <br /><br />
+                At Aurora Brickwell's online store, you'll find a handpicked selection of her favorite Lego™ sets alongside her exclusive designs, each brimming with creativity and imagination. Whether you're a seasoned collector or a budding builder, there's something for everyone in Aurora's collection.
+                <br /><br />
+                But Aurora's ambitions don't stop there. In a competitive online marketplace, she understands the importance of staying ahead of the curve. That's why she's incorporating cutting-edge machine learning technology to deliver personalized product recommendations to her customers, streamlining their shopping experience and offering expert guidance every step of the way.
+                <br /><br />
+                Security is paramount in Aurora's world, and she's committed to safeguarding her customers' information against online threats. With stringent measures in place to ensure compliance with privacy laws and detect fraudulent activity, Aurora's website provides a secure haven for Lego™ enthusiasts to explore, shop, and connect.
+                <br /><br />
+                Join Aurora Brickwell on her journey to inspire creativity, ignite imaginations, and build dreams brick by brick. Experience the magic of Lego™ like never before, only at Aurora Brickwell's online store.
+                <br />
+                <br />
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</body>

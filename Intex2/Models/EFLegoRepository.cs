@@ -10,3 +10,4 @@
         public IQueryable<Product> Products => _context.Products;
     }
 }
+

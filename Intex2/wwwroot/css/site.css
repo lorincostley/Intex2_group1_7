@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.card {
+    /* Adjust height as needed */
+    height: 100px; /* Example height */
+}
