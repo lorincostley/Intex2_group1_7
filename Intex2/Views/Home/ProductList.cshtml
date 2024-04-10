@@ -12,6 +12,22 @@
 
 }
 
+<div class="bg-dark text-white p-2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col navbar-brand">Lego</div>
+            <div class="col-6 navbar-text text-end">
+                <vc:cart-summary />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row m-1 p-1">
+    <div class="col-3">
+        <vc:product-types />
+    </div>
+
 
 <div page-model="@Model.PaginationInfo" page-action="ProductList" page-class-enabled="true"
      page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
