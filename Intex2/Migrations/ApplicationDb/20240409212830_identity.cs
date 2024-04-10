@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Intex2.Migrations
+namespace Intex2.Migrations.ApplicationDb
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class identity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
