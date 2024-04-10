@@ -24,7 +24,7 @@ namespace Intex2.Controllers
 
         public IActionResult ProductList(int pageNum, string? productType)
         {
-            int pageSize = 2;
+            int pageSize = 9;
 
             var blah = new ProductListViewModel
             {

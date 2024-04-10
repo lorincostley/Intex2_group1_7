@@ -4,33 +4,39 @@
 
 @model ProductListViewModel
 
-<h1>Lego</h1>
-@foreach (Product p in Model.Products)
-{
+    <h1>Lego Products</h1>
 
-    <partial name="ProductSummary" model="p" />
 
-}
+        <div class="col-2">
+            <!-- Filter options -->
+            <vc:product-types />
+        </div>
+        <div class="product-list" style="padding-left: 200px">
+           <div class="container px-12 mt-1">
+              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 justify-content-center">
+                <!-- Product list -->
+                @foreach (Product p in Model.Products)
+                {
+                    <partial name="ProductSummary" model="p" />
+                }
+              </div>
+           </div>
+        </div>
 
-<div class="bg-dark text-white p-2">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col navbar-brand">Lego</div>
-            <div class="col-6 navbar-text text-end">
-                <vc:cart-summary />
+
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <!-- Pagination -->
+            <div page-model="@Model.PaginationInfo" page-action="ProductList" page-class-enabled="true"
+                 page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+                 page-url-projectType="@Model.CurrentProductType">
             </div>
         </div>
+
+        <div class="col-md-6 text-end">
+            <!-- Cart summary -->
+            <vc:cart-summary />
+        </div>
     </div>
-</div>
-
-<div class="row m-1 p-1">
-    <div class="col-3">
-        <vc:product-types />
-    </div>
-
-
-<div page-model="@Model.PaginationInfo" page-action="ProductList" page-class-enabled="true"
-     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-     page-url-projectType="@Model.CurrentProductType"
-     class="btn-group pull-right m-1">
 </div>
