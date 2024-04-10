@@ -3,6 +3,8 @@ using Intex2.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace Intex2.Controllers
 {
@@ -29,8 +31,8 @@ namespace Intex2.Controllers
             var blah = new ProductListViewModel
             {
                 Products = _repo.Products
-                    .Where(x => x.ProductType == productType || productType == null)
-                    .OrderBy(x => x.ProductName)
+                    .Where(x => x.Category == productType || productType == null)
+                    .OrderBy(x => x.Name)
                     .Skip(pageSize * (pageNum - 1))
                     .Take(pageSize),
 
@@ -38,7 +40,7 @@ namespace Intex2.Controllers
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = productType == null ? _repo.Products.Count() : _repo.Products.Where(x => x.ProductType == productType).Count()
+                    TotalItems = productType == null ? _repo.Products.Count() : _repo.Products.Where(x => x.Category == productType).Count()
                 },
 
                 CurrentProductType = productType
