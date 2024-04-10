@@ -1,20 +1,21 @@
 ﻿@using Intex2.Infrastructure
 
 @model Product
-
-<div class="col mb-5">
-    <div class="card h-100" style="height: 100px">
-    <h3>
-        @Model.ProductName
-    </h3>
-    <img class="card-img-top h-100" src="~/SimpleLegoMan.jpg" />
-    <ul>
-        <li>Product Type: @Model.ProductType</li>
-    </ul>
-    <form id=@Model.ProductId method="post" asp-page="/Cart">
-        <input type="hidden" asp-for="ProductId" />
-        @* <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" /> *@
-        <button type="submit" class="btn-outline-success btn-small float-end">Add to Cart</button>
-    </form>
+<a asp-controller="Home" asp-action="ProductSummary" >
+    <div class="col mb-5">
+        <div class="card h-100" style="height: 100px">
+        <h3>
+            @Model.ProductName
+        </h3>
+        <img class="card-img-top h-100" src="~/SimpleLegoMan.jpg" />
+        <ul>
+            <li>Product Type: @Model.ProductType</li>
+        </ul>
+        <form id=@Model.ProductId method="post" asp-page="/Cart">
+            <input type="hidden" asp-for="ProductId" />
+            @* <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" /> *@
+            <button type="submit" class="btn-outline-success btn-small float-end">Add to Cart</button>
+        </form>
+        </div>
     </div>
-</div>
+</a>

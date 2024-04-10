@@ -22,6 +22,11 @@ namespace Intex2.Controllers
             return View();
         }
 
+        public IActionResult ProductSummary(int productId)
+        {
+            return View(ProductDetails);
+        }
+
         public IActionResult ProductList(int pageNum, string? productType)
         {
             int pageSize = 9;
