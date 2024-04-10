@@ -16,7 +16,7 @@ namespace Intex2.Components
             ViewBag.SelectedProductType = RouteData?.Values["productType"];
 
             var productTypes = _legoRepo?.Products
-                .Select(x => x.ProductType)
+                .Select(x => x.Category)
                 .Distinct()
                 .OrderBy(x => x);
 
