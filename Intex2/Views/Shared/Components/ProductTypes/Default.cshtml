@@ -7,10 +7,10 @@
 @model IQueryable<string>
 
 <div class="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="ProductList" asp-route-projectType="" asp-route-pageNum="">Home</a>
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="ProductList" asp-route-productType="" asp-route-pageNum="">Home</a>
 
     @foreach (string pt in Model ?? Enumerable.Empty<string>())
     {
-        <a class="btn @(pt == ViewBag.SelectedProductType ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="ProductList" asp-route-projectType="@pt" asp-route-pageNum="1">@pt</a>
+        <a class="btn @(pt == ViewBag.SelectedProductType ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="ProductList" asp-route-productType="@pt" asp-route-pageNum="1">@pt</a>
     }
 </div>
