@@ -2,19 +2,6 @@
 @model Intex2.Pages.CartModel
 @{
 }
-<style>
-    .left-button,
-    .right-button {
-        background-color: #5b64d1;
-        color: white;
-        font-weight: bold;
-        padding: 10px 20px;
-        font-size: 16px;
-        display: block;
-        margin: 0 auto;
-        border-radius: 10px;
-    }
-</style>
 
 
 <br />
@@ -108,15 +95,13 @@
         </tbody>
     </table>
 </div>
-<div style="col-3">
     <div style="font-weight:bold">Total:</div>
     <div>@Model.Cart?.CalculateTotal().ToString("c")</div>
-</div>
+    <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; font-size: 16px; right:auto;" class="rounded-pill">Checkout</button>
 </div>
 </div>
 
-<div class="container">
-    <button class="left-button rounded-pill">Checkout</button>
-    <button class="right-button rounded-pill">Keep Shopping</button>
+<div style="color: #5b64d1;" class="text-center">
+    <a asp-area="" asp-controller="Home" asp-action="ProductList">Keep Shopping</a>
 </div>
 

@@ -7,7 +7,7 @@
             <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="ProductList" asp-route-productType="" asp-route-pageNum="">Home</a>
             <br />
             <p>Category</p>
-            @foreach (string pt in Model ?? Enumerable.Empty<string>())
+            @foreach (string pt in Model ?? Enumerable.Empty<string>()) 
             {
                 <a class="btn @(pt == ViewBag.SelectedProductType ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="ProductList" asp-route-productType="@pt" asp-route-pageNum="1">@pt</a>
             }
