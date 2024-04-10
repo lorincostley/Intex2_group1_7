@@ -15,12 +15,12 @@ namespace Intex2.Components
         {
             ViewBag.SelectedProductType = RouteData?.Values["productType"];
 
-            //var productTypes = _legoRepo?.Products
-            //    .Select(x => x.ProductType)
-            //    .Distinct()
-            //    .OrderBy(x => x);
+            var productTypes = _legoRepo?.Products
+                .Select(x => x.ProductType)
+                .Distinct()
+                .OrderBy(x => x);
 
-            return View(/*productTypes*/);
+            return View(productTypes);
         }
     }
 }
