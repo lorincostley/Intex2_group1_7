@@ -12,7 +12,7 @@ namespace Intex2.Components
         }
         public IViewComponentResult Invoke()
         {
-            ViewBag.SelectedPrimaryColor = RouteData?.Values[“color”];
+            ViewBag.SelectedPrimaryColor = RouteData?.Values["color"];
             var color = _legoRepo?.Products
               .Select(x => x.PrimaryColor)
               .Distinct()
