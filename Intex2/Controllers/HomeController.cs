@@ -12,10 +12,20 @@ namespace Intex2.Controllers
     {
 
         private ILegoRepository _repo;
+        private readonly InferenceSession _session;
 
         public HomeController(ILegoRepository temp)
         {
             _repo = temp;
+
+            // Initialize the InferenceSession here; ensure the path is correct.
+            try
+            {
+                _session = new InferenceSession(@"C:\\Users\\kbangerter\\source\\repos\\lorincostley\\Intex2_group1_7\\Intex2\\gradient_model.onnx");
+            }
+            catch (Exception ex)
+            {
+            }
         } 
 
         [Authorize]

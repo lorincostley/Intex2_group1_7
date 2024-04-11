@@ -9,6 +9,8 @@ using Azure.Core;
 using Intex2.Models;
 using Microsoft.AspNetCore.Builder;
 using System.Drawing.Text;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 internal class Program
 {
@@ -121,6 +123,15 @@ internal class Program
 
         builder.Services.AddRazorPages();
 
+        builder.Services.Configure<CookiePolicyOptions>(options =>
+        {
+            // This lambda determines whether user consent for non-essential 
+            // cookies is needed for a given request.
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.None;
+            options.ConsentCookieValue = "true";
+        });
+
         builder.Services.Configure<IdentityOptions>(options =>
         {
             // Password settings.
@@ -142,15 +153,11 @@ internal class Program
             options.User.RequireUniqueEmail = false;
         });
 
-        builder.Services.ConfigureApplicationCookie(options =>
+        builder.Services.AddHsts(options =>
         {
-            // Cookie settings
-            options.Cookie.HttpOnly = true;
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
-            options.LoginPath = "/Identity/Account/Login";
-            options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-            options.SlidingExpiration = true;
+            options.Preload = true;
+            options.IncludeSubDomains = true;
+            options.MaxAge = TimeSpan.FromDays(60);
         });
 
         var app = builder.Build();
@@ -167,17 +174,44 @@ internal class Program
             app.UseHsts();
         }
 
+
+        string modelPath = "C:\\Users\\kbangerter\\source\\repos\\lorincostley\\Intex2_group1_7\\Intex2\\gradient_model.onnx";
+
+        // Load the model
+        var sessionOptions = new Microsoft.ML.OnnxRuntime.SessionOptions();
+        using (var session = new InferenceSession(modelPath, sessionOptions))
+        {
+            // Model loaded successfully, you can use the session for inference
+            // For example, you can run inference on input data
+            // var inputTensor = ...; // Prepare input tensor
+            // var results = session.Run(...); // Perform inference
+        }
+
+        Console.WriteLine("Model loaded successfully.");
+
+
+
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseSession();
-
+        app.UseCookiePolicy();
         app.UseRouting();
 
         app.UseAuthentication();
         app.UseAuthorization();
 
-
+        app.Use(async (ctx, next) =>
+        {
+            ctx.Response.Headers.Append("Content-Security-Policy",
+            "default-src 'self';" +
+            "script-src 'self' https://stackpath.bootstrapcdn.com/ 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=';" +
+            "img-src data: https:;" +
+            "style-src https://stackpath.bootstrapcdn.com/ 'self' 'unsafe-inline';" +
+            "connect-src 'self' wss: http://localhost:52827 ws://localhost:52827");
+            await next();
+        });
 
         app.MapControllerRoute("pagenumandtype", "{projectType}/{pageNum}", new { Conroller = "Home", action = "Index" });
         app.MapControllerRoute("projectType", "{projectType}", new { Controller = "Home", action = "Index", pageNum = 1 });
