@@ -1,7 +1,15 @@
 ﻿@model IEnumerable<Intex2.Models.ViewModels.OrderPredictionViewModel>
 
+<style>
+    .container-admin-orders {
+        width: 90%; /* Adjust the width as needed */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 0 20px; /* Add padding on the sides */
+        box-sizing: border-box; /* Include padding in the width calculation */
+    }
+</style>
 
-@{
+ @{
     var classTypeDict = new Dictionary<int, string>
     {
         { 0, "Not Fraud" },
@@ -10,7 +18,7 @@
 }
 
 <br />
-<div class="row">
+<div class="row container-admin-orders">
     <div class="col-4" style="text-align:center">
         <a asp-area="" asp-controller="Home" asp-action="Admin_Products" style="text-align:center; color:black; font-size:large">Products</a>
     </div>
@@ -39,10 +47,10 @@
                 <td>Shipping Address</td>
                 <td>Bank</td>
                 <td>Type of Card</td>
-                <td>Accept</td>
-                <td>Deny</td>
-                <td>Fraud</td>
-                <td>FraudPrediction</td>
+                <td>Fraud 1/0</td>
+                <td>Fraud text</td>
+                <td>Edit</td>
+                <td>Delete</td>
             </tr>
 
         </thead>
@@ -67,8 +75,17 @@
                     <td>@x.Orders.Fraud</td>
                     <td>@x.Prediction</td>
 
-                    <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.Orders.TransactionId">Accept</a></td>
-                    <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.Orders.TransactionId">Deny</a></td>
+                   <td>
+                        <a asp-controller="Admin" asp-action="Admin_Edit_Order" asp-route-id="@x.Orders.TransactionId">
+                            <img src="~/pencil.jpg" alt="Edit" style="height:25px" />
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Admin" asp-action="Admin_Delete_Order" asp-route-id="@x.Orders.TransactionId">
+                            <img src="~/blacktrashcan.jpg" alt="Delete" style="height:25px" />
+                        </a>
+                    </td>
+                
                 </tr>
             }
         </tbody>
