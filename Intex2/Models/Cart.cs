@@ -29,7 +29,7 @@
 
         public decimal CalculateTotal()
         {
-            var blah = Lines.Sum(x => 25 * x.Quantity);
+            var blah = Lines.Sum(x => x.Product.Price * x.Quantity);
             return (blah);
         }
         public class CartLine
