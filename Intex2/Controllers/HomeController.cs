@@ -134,11 +134,11 @@ namespace Intex2.Controllers
 
         public IActionResult Admin_Orders()
         {
-            var records = _repo.Order
+            var records = _repo.Orders
                 .OrderByDescending(o => o.Date)
                 .Take(25)
                 .ToList();
-            var predictions = new List<OrderPrediction>(); //Viewmodel for the view
+            var predictions = new List<OrderPredictionViewModel>(); //Viewmodel for the view
 
             var class_type_dict = new Dictionary<int, string>
             {
@@ -154,12 +154,12 @@ namespace Intex2.Controllers
                     (float)record.Time,
                     (float)(record.Amount ?? 0),
 
-                    record.DayofWeek == "Mon" ? 1 : 0,
-                    record.DayofWeek == "Tue" ? 1 : 0,
-                    record.DayofWeek == "Wed" ? 1 : 0,
-                    record.DayofWeek == "Thu" ? 1 : 0,
-                    record.DayofWeek == "Sat" ? 1 : 0,
-                    record.DayofWeek == "Sun" ? 1 : 0,
+                    record.DayOfWeek == "Mon" ? 1 : 0,
+                    record.DayOfWeek == "Tue" ? 1 : 0,
+                    record.DayOfWeek == "Wed" ? 1 : 0,
+                    record.DayOfWeek == "Thu" ? 1 : 0,
+                    record.DayOfWeek == "Sat" ? 1 : 0,
+                    record.DayOfWeek == "Sun" ? 1 : 0,
 
                     record.EntryMode == "PIN" ? 1 : 0,
                     record.EntryMode == "Tap" ? 1 : 0,
@@ -202,7 +202,7 @@ namespace Intex2.Controllers
                     predictionResult = prediction != null && prediction.Length > 0 ? class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown") : "Error in prediction";
                 }
 
-                predictions.Add(new OrderPrediction { Order = record, Prediction = predictionResult });
+                predictions.Add(new OrderPredictionViewModel { Orders = record, Prediction = predictionResult });
 
             }
 

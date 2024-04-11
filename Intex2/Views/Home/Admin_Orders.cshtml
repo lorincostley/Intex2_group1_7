@@ -1,4 +1,13 @@
-﻿@*ORDERS*@
+﻿@model IEnumerable<Intex2.Models.ViewModels.OrderPredictionViewModel>
+
+
+@{
+    var classTypeDict = new Dictionary<int, string>
+    {
+        { 0, "Not Fraud" },
+    { 1, "Fraud" }
+    };
+}
 
 <br />
 <div class="row">
@@ -32,39 +41,43 @@
                 <td>Type of Card</td>
                 <td>Accept</td>
                 <td>Deny</td>
+                <td>Fraud</td>
+                <td>FraudPrediction</td>
             </tr>
 
         </thead>
 
-@*         @foreach (var x in Model)
-        {
-            <tbody>
+
+        <tbody>
+            @foreach (var x in Model)
+            {
                 <tr>
                     CHANGE THESE TO CORRECT VARs
-                    <td>@x.transaction_ID</td>
-                    <td>@x.customer_ID</td>
-                    <td>@x.Date</td>
-                    <td>@x.day_of_week</td>
-                    <td>@x.time</td>
-                    <td>@x.entry_mode</td>
-                    <td>@x.amount</td>
-                    <td>@x.type_of_transaction</td>
-                    <td>@x.country_of_transaction</td>
-                    <td>@x.shipping_ddress</td>
-                    <td>@x.bank</td>
-                    <td>@x.type_of_card</td>
+                    <td>@x.Orders.TransactionId</td>
+                    <td>@x.Orders.CustomerId</td>
+                    <td>@x.Orders.Date</td>
+                    <td>@x.Orders.DayOfWeek</td>
+                    <td>@x.Orders.Time</td>
+                    <td>@x.Orders.EntryMode</td>
+                    <td>@x.Orders.Amount</td>
+                    <td>@x.Orders.TypeOfTransaction</td>
+                    <td>@x.Orders.CountryOfTransaction</td>
+                    <td>@x.Orders.ShippingAddress</td>
+                    <td>@x.Orders.Bank</td>
+                    <td>@x.Orders.TypeOfCard</td>
+                    <td>@x.Orders.Fraud</td>
+                    <td>@x.Prediction</td>
 
                     ADD ICONS
-                    <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.transaction_ID">Accept</a></td>
-                    <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.transaction_ID">Deny</a></td> ADD A DELETE CONFIRMATION PAGE/WINDOW
+                    <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.Orders.TransactionId">Accept</a></td>
+                    <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.Orders.TransactionId">Deny</a></td> ADD A DELETE CONFIRMATION PAGE/WINDOW
                 </tr>
-            </tbody>
-        } *@
-
+            }
+        </tbody>
     </table>
 
     <br /><br />
-    <h3 style="text-align:center">Processed Orders</h3>
+   @*  <h3 style="text-align:center">Processed Orders</h3>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -85,7 +98,7 @@
             </tr>
 
         </thead>
-
+ *@
 @*         @foreach (var x in Model)
         {
             <tbody>
