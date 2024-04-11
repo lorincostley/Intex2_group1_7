@@ -11,6 +11,8 @@ namespace Intex2.Models
         public virtual DbSet<LineItem> LineItems { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Recommendation> Recommendations { get; set; }
+        public virtual DbSet<Top_Rating> Top_Ratings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
