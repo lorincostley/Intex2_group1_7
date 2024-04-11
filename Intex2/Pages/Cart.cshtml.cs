@@ -40,5 +40,7 @@ namespace Intex2.Pages
             Cart.RemoveLine(Cart.Lines.First(x => x.Product.ProductId == productId).Product);
             return RedirectToPage(new { returnUrl = returnUrl });
         }
+
+        public Product Product { get; set; }
     }
 }

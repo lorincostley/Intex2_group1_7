@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner)
+{
+    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
+        Just like the perfect LEGO build, we use cookies to ensure our website fits together just right and provides you with 
+        an awesome experience. These little bricks of data help us understand site traffic and offer you personalized content.
+        <br />
+        By continuing your journey in our LEGO universe or by clicking "Accept", you're saying it's okay for us to use these cookies.
+        <br />
+        <br />
+        <button type="button" class="btn btn-outline-info" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+            <span aria-hidden="true">Accept</span>
+        </button>
+    </div>
+    <script>
+        (function () {
+            var button = document.querySelector("#cookieConsent button[data-cookie-string]");
+            button.addEventListener("click", function (event) {
+                document.cookie = button.dataset.cookieString;
+            }, false);
+        })();
+    </script>
+}

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Intex2.Models;
 
 public partial class Order
 {
+    [Key]
     public int TransactionId { get; set; }
 
+    [Key]
     public int CustomerId { get; set; }
 
     public DateOnly? Date { get; set; }

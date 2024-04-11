@@ -2,7 +2,7 @@
 @model Intex2.Pages.CartModel
 @{
 }
-
+ 
 
 <br />
 <div style="display: flex; justify-content: center; align-items: center;">
@@ -30,7 +30,7 @@
             {
                 <tr>
                         <!--IMAGE-->
-                    <td><img src="~/legosignupman.jpeg" /></td>
+                            <td><img src="@l.Product.ImgLink" alt="Product Image" style="max-height: 100px; max-width: 100px;" /></td>
                         <!--PRODUCT INFO-->
                     <td>
                         <div style="font-weight:600; font-size:24px">
@@ -38,11 +38,11 @@
                         </div>
                         <br />
                         <div style="color:dimgrey; font-size:16px; font-weight:100">
-                            Category: @l.Product.ProductId
+                                    Category: @l.Product.Category
                             <br />
-                            Year: @l.Product.ProductId
+                            Year: @l.Product.Year
                             <br />
-                            Pieces: @l.Product.ProductId
+                            Pieces: @l.Product.NumParts
                             <br />
                                 <form asp-page-handler="Remove" method="post" style="display: inline;">
                                     <input type="hidden" name="ProductId" value="@l.Product.ProductId" />
@@ -62,9 +62,8 @@
                         </div>
                         <br />
                         <div style="font-weight:600; font-size:16px; color:black">
-                            PRICE
-@*                           @l.Product.ProductId
- *@                     </div>
+                           @l.Product.Price
+                     </div>
 
                     </td>
                         <!--QUANTITY-->
@@ -84,7 +83,7 @@
                             </div>
                             <br />
                             <div style="font-weight:600; font-size:16px; color:black">
-                                @((l.Quantity * 25).ToString("c"))
+                                @((l.Quantity * @l.Product.Price).ToString("c"))
                             </div>
                         </td>
                      <td class="text-center">

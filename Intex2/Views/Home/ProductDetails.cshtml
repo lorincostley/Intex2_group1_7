@@ -1,10 +1,64 @@
 ﻿@model Product
 
-<div class="card m-1 p-1">
-    <h3>@Model.Name</h3>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Details</title>
+  <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
-    <ul>
-        <li>Product Type: @Model.Category</li>
-        <li>Price: @Model.ProductId</li>
-    </ul>
-</div>
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 20px;
+        }
+
+        .product-info {
+            display: flex;
+            margin-top: 20px;
+        }
+
+            .product-info img {
+                width: 450px; /* Set a fixed width for the image */
+                height: 450px; /* Maintain aspect ratio */
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+
+        .back-to-home a {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-top: 20px;
+            color: dimgray;
+            text-decoration: none;
+            border: 2px solid dimgray;
+            border-radius: 5px;
+        }
+
+        .red-bar {
+            background-color: #E74F65;
+            height: 5px;
+            width: 100%;
+        }
+    </style>
+    </head>
+<body>
+    <div class="container">
+        <div class="product-info">
+            <img src="@Model.ImgLink" alt="Product Image" />
+            <div class="product-details">
+                <h2>@Model.Name</h2>
+                <br />
+                <p>Price: $@Model.Price</p>
+                <p>Description: @Model.Description</p>
+                <p class="back-to-home"><a href="@Url.Action("ProductList", "Home")">Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

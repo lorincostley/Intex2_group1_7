@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Intex2.Models;
 
 public partial class Product
 {
+    [Key]
+    [Required]
     public int ProductId { get; set; }
-
+    
     public string Name { get; set; } = null!;
 
     public int Year { get; set; }
 
-    public int NumParts { get; set; }
+    public int? NumParts { get; set; }
 
     public int Price { get; set; }
 

@@ -1,0 +1,80 @@
+﻿@*PRODUCTS*@
+@model AdminViewModel
+
+<br />
+<div class="row">
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Admin" asp-action="Admin_Products" style="text-align:center; color:black; font-size:larger; font-weight:bold">Products</a>
+    </div>
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Admin" asp-action="Admin_Users" style="text-align:center; color:black; font-size:large">Users</a>
+    </div>
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Admin" asp-action="Admin_Orders" style="text-align:center; color:black; font-size:large">Orders</a>
+    </div>
+</div>
+
+<br /> 
+<br />
+<div class="align-text-right">
+    <a asp-controller="Admin" asp-action="Admin_Add_Product">
+        <img src="~/Plus.jpg" alt="Add" style="height:25px" />
+    </a>
+</div>
+<div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Product ID</td>
+                <td>Name</td>
+                <td>Year</td>
+                <td># of Parts</td>
+                <td>Price</td>
+                <td>Image</td>
+                <td>Primary Color</td>
+                <td>Secondary Color</td>
+                <td>Description</td>
+                <td>Category</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+
+        </thead>
+
+        @foreach (var x in Model.Products)
+        {
+        <tbody>
+        <tr>
+        <td>@x.ProductId</td>
+        <td>@x.Name</td>
+        <td>@x.Year</td>
+        <td>@x.NumParts</td>
+        <td>@x.Price</td>
+        <td><img src="@x.ImgLink" alt="Product Image" style="max-height: 100px; max-width: 100px;" /></td>
+        <td>@x.PrimaryColor</td>
+        <td>@x.SecondaryColor</td>
+        <td>@x.Description</td>
+        <td>@x.Category</td>
+
+            <td>
+                <a asp-controller="Admin" asp-action="Admin_Edit_Product" asp-route-id="@x.ProductId">
+                    <img src="~/pencil.jpg" alt="Edit" style="height:25px" />
+                </a>
+            </td>
+            <td>
+                <a asp-controller="Admin" asp-action="Admin_Delete_Product" asp-route-id="@x.ProductId">
+                    <img src="~/blacktrashcan.jpg" alt="Delete" style="height:25px" />
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+        } 
+
+    </table>
+</div>
+
+<div page-model="@Model.PaginationInfo" page-action="Admin_Products" page-class-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+     class="btn-group pull-right m-1">
+</div> 
