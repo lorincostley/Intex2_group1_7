@@ -198,37 +198,23 @@ internal class Program
         //    await next();
         //});
 
-        app.MapControllerRoute(
-            name: "pagenumandtypeandcolor",
-            pattern: "{projectType}/{color}/{pageNum}",
-            defaults: new { controller = "Home", action = "Index" }
-        );
+        //app.MapControllerRoute("pagenumandtypeandcolor", "{projectType}/{color}/{pageNum}", new { controller = "Home", action = "Index" });
 
-        app.MapControllerRoute(
-            name: "pagenumandtype",
-            pattern: "{projectType}/{pageNum}",
-            defaults: new { controller = "Home", action = "Index" }
-        );
+        //app.MapControllerRoute("pagenumandtype", "{projectType}/{pageNum}", new { controller = "Home", action = "Index" });
 
-        app.MapControllerRoute(
-            name: "pagenumandcolor",
-            pattern: "{color}/{pageNum}",
-            defaults: new { controller = "Home", action = "Index" }
-        );
+        //app.MapControllerRoute("pagenumandcolor", "{color}/{pageNum}", new { controller = "Home", action = "Index" });
 
-        app.MapControllerRoute(
-            name: "projectType",
-            pattern: "{projectType}",
-            defaults: new { controller = "Home", action = "Index", pageNum = 1 }
-        );
+        //app.MapControllerRoute("projectType", "{projectType}", new { controller = "Home", action = "Index", pageNum = 1 });
 
-        app.MapControllerRoute(
-            name: "pagination",
-            pattern: "Projects/{pageNum}",
-            defaults: new { controller = "Home", action = "Index" }
-        );
+        //app.MapControllerRoute("pagination", "Projects/{pageNum}", new { controller = "Home", action = "Index" });
 
+
+
+        app.MapControllerRoute("pagenumandtype", "{projectType}/{pageNum}", new { Conroller = "Home", action = "Index" });
+        app.MapControllerRoute("projectType", "{projectType}", new { Controller = "Home", action = "Index", pageNum = 1 });
+        app.MapControllerRoute("pagination", "Projects/{pageNum}", new { Controller = "Home", action = "Index" });
         app.MapDefaultControllerRoute();
+
 
 
         app.MapRazorPages();
