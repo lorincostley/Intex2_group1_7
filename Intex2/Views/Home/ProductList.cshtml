@@ -4,39 +4,33 @@
 
 @model ProductListViewModel
 
-    <h1>Lego Products</h1>
-
-
-        <div class="col-2">
-            <!-- Filter options -->
+<div class="container">
+    <div class="row">
+        <!-- Filters Section (Left Side) -->
+        <div class="col-lg-1">
             <vc:product-types />
         </div>
-        <div class="product-list" style="padding-left: 200px">
-           <div class="container px-12 mt-1">
-              <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 justify-content-center"> 
-                <!-- Product list -->
-                @foreach (Product p in Model.Products)
+        <!-- Main Content Section (Right Side) -->
+        <div class="col-lg-11">
+            <section class="py-5">
+                <div class="container px-4 px-lg-5 mt-5">
+                    <h3>All Products</h3>
+                    <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
+                @foreach (Product p in Model.Products ?? Enumerable.Empty<Product>())
                 {
-                    <partial name="ProductSummary" model="p" />
+                            <div class="col mb-5">
+                                <a href="@Url.Action("ProductDetails", "Home", new { ProductId = p.ProductId, Name = p.Name, ImgLink = p.ImgLink, Price = p.Price, Description = p.Description})" class="card-link">
+                                    <div class="card h-100 border-0">
+                                        <partial name="ProductSummary" model="p" />
+                                    </div>
+                                </a>
+                            </div>
                 }
-              </div>
-           </div>
-        </div>
-
-
-
-    <div class="row mt-4">
-        <div class="col-md-6" style="text-align:center">
-            <!-- Pagination -->
-            <div page-model="@Model.PaginationInfo" page-action="ProductList" page-class-enabled="true"
-                 page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-                 page-url-projectType="@Model.CurrentProductType">
+                    </div>
+                </div>
+            </section>
+            <div page-model="@Model.PaginationInfo" page-action="ProductList" page-class-enabled="true" page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary" page-url-category="@Model.CurrentProductType!" class="btn-group pull-right m-1">
             </div>
-        </div>
-
-        <div class="col-md-6 text-end">
-            <!-- Cart summary -->
-            <vc:cart-summary />
         </div>
     </div>
 </div>

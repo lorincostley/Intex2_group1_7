@@ -34,14 +34,28 @@ namespace Intex2.Controllers
             return View();
         }
 
-        public IActionResult ProductSummary(int productId)
+        public ActionResult ProductDetails(int ProductId, string Name, string ImgLink, int Price, string Description)
         {
-            return View(ProductDetails);
+
+            var product = new Product
+            {
+                ProductId = ProductId,
+                Name = Name,
+                ImgLink = ImgLink,
+                Price = Price,
+                Description = Description
+            };
+
+            return View(product);
         }
 
         public IActionResult ProductList(int pageNum, string? productType)
         {
             int pageSize = 9;
+            if (pageNum < 1)
+            {
+                pageNum = 1;
+            }
 
             var blah = new ProductListViewModel
             {
@@ -125,11 +139,6 @@ namespace Intex2.Controllers
         public IActionResult Login(string var)
         {
             return RedirectToAction("SignUp");
-        }
-
-        public IActionResult ProductDetails()
-        {
-            return View();
         }
         public IActionResult SignUp()
         {
