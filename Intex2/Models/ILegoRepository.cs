@@ -9,6 +9,8 @@
         public void AdminUpdateProduct(Product product);
         public void AdminUpdateCustomer(Customer customer);
         public void AdminDeleteCustomer(Customer customer);
+        public void AddOrder(Order order);
+
 
     }
 }

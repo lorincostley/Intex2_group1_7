@@ -33,6 +33,12 @@
             _context.Remove(customer);
             _context.SaveChanges();
         }
+        public void AddOrder(Order order)
+        {
+            _context.Add(order);
+            _context.SaveChanges();
+        }
+
     }
 }
 
