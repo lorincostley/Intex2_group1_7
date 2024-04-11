@@ -41,6 +41,12 @@ namespace Intex2.Pages
             return RedirectToPage(new { returnUrl = returnUrl });
         }
 
+        public IActionResult OnPostCheckout(string returnUrl)
+        {
+            return RedirectToAction("Confirmation", new { returnUrl });
+        }
+
         public Product Product { get; set; }
+        public Order Order { get; set; }
     }
 }

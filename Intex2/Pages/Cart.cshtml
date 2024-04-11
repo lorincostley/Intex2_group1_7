@@ -14,8 +14,8 @@
 <div style="row">
         <div style="col-9; cols">
     <table class="table">
-
-        <thead>
+@*         <input asp-for="Orders.TransactionId" type="hidden" />
+ *@        <thead>
             <tr>
                 <th></th> <!--IMAGE-->
                 <th></th> <!--PRODUCT INFO-->
@@ -62,7 +62,7 @@
                         </div>
                         <br />
                         <div style="font-weight:600; font-size:16px; color:black">
-                           @l.Product.Price
+                           $ @l.Product.Price
                      </div>
 
                     </td>
@@ -96,8 +96,10 @@
 </div>
     <div style="font-weight:bold">Total:</div>
     <div>@Model.Cart?.CalculateTotal().ToString("c")</div>
-    <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; font-size: 16px; right:auto;" class="rounded-pill">Checkout</button>
-</div>
+        <form method="post" action="/Home/Checkout">
+            <button style="color: #5b64d1;" type="submit" class="rounded-pill">Checkout</button>
+        </form>
+    </div>
 </div>
 
 <div style="color: #5b64d1;" class="text-center">

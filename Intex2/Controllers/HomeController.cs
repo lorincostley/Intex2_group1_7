@@ -283,19 +283,42 @@ namespace Intex2.Controllers
 
         //    return View(predictions);
         //}
-        public IActionResult Admin_Products()
-        {
-            return View();
-        }
-        public IActionResult Admin_Users()
-        {
-            return View();
-        }
+
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Checkout()
+        {
+/*            // Get the current date and time
+            DateTime now = DateTime.Now;
+
+            // Format the date in the "1/1/2022" format
+            string dateOnly = now.ToString("M/d/yyyy");
+
+            // Get the day of the week (e.g., "Tues")
+            string dayOfWeek = now.ToString("ddd");
+
+            // Get the time as an integer (e.g., 13 for 1:00 PM)
+            int timeAsInteger = now.Hour;
+
+            Order order = new Order
+            {
+                Date = dateOnly,
+                DayOfWeek = dayOfWeek,
+                Time = timeAsInteger
+            };
+
+            // Save the order object to the database
+            _repo.Order.Add(order);
+            _repo.SaveChanges();*/
+
+            return View();
+
         }
     }
 }

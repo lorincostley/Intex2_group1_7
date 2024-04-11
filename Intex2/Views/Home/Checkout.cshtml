@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model OrderPredictionViewModel
+
+<div class="container-signup" style="text-align:center">
+    <br />
+    <h1>Checkout</h1>
+    <br />
+    <form>
+        <input asp-for="Customer.CustomerId" type="hidden" />
+        <br />
+        <div>
+            <select id="card" class="pill-input align-left" placeholder="Type of Card">
+                <option value="" selected disabled>Type of Card</option>
+                <option value="Visa">Visa</option>
+                <option value="MasterCard">MasterCard</option>
+            </select>
+        </div>
+        <br />
+        <div>
+            <select id="bank" class="pill-input align-left" placeholder="Bank">
+                <option value="" selected disabled>Bank</option>
+                <option value="RBS">RBS</option>
+                <option value="Lloyds">Lloyds</option>
+                <option value="Barclays">Barclays</option>
+                <option value="Halifax">Halifax</option>
+                <option value="Monzo">Monzo</option>
+                <option value="HSBC">HSBC</option>
+                <option value="Metro">Metro</option>
+            </select>
+        </div>
+        <div>
+            <select id="type" class="pill-input align-left">
+                <option value="Online">Online</option>
+            </select>
+        </div>
+        <div>
+            <select id="mode" class="pill-input-gender align-left">
+                <option value="CVV">CVV</option>
+            </select>
+        </div>
+        <input asp-for="Orders.Amount" type="hidden" />
+        <input asp-for="Customer.CountryOfResidence" type="hidden" />
+        <input asp-for="Customer.CountryOfResidence" type="hidden" />
+
+        <br />
+        
+        <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; padding: 10px 20px; font-size: 16px; display: block; margin: 0 auto;" class="rounded-pill">Submit</button>
+    </form>
+</div>
