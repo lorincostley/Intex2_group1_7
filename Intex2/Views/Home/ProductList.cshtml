@@ -1,14 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Product List";
 }
-
 @model ProductListViewModel
-
 <div class="container">
     <div class="row">
         <!-- Filters Section (Left Side) -->
         <div class="col-lg-1">
             <vc:product-types />
+            <vc:color />
         </div>
         <!-- Main Content Section (Right Side) -->
         <div class="col-lg-11">
@@ -16,8 +15,8 @@
                 <div class="container px-4 px-lg-5 mt-5">
                     <h3>All Products</h3>
                     <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
-                @foreach (Product p in Model.Products ?? Enumerable.Empty<Product>())
-                {
+                        @foreach (Product p in Model.Products ?? Enumerable.Empty<Product>())
+                        {
                             <div class="col mb-5">
                                 <a href="@Url.Action("ProductDetails", "Home", new { ProductId = p.ProductId, Name = p.Name, ImgLink = p.ImgLink, Price = p.Price, Description = p.Description})" class="card-link">
                                     <div class="card h-100 border-0">
@@ -25,12 +24,58 @@
                                     </div>
                                 </a>
                             </div>
-                }
+                        }
                     </div>
                 </div>
             </section>
-            <div page-model="@Model.PaginationInfo" page-action="ProductList" page-class-enabled="true" page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary" page-url-category="@Model.CurrentProductType!" class="btn-group pull-right m-1">
+            <div>
             </div>
         </div>
     </div>
 </div>
+<!-- Pagination controls div -->
+<div class="pagination-controls">
+    <label for="pageSize">Products Per Page:</label>
+    <select id="pageSize">
+        @foreach (var pageSizeOption in Model.PaginationInfo.PageSizeOptions)
+        {
+            <option value="@pageSizeOption">@pageSizeOption</option>
+        }
+    </select>
+    <!-- Pagination -->
+    <div class="btn-group pull-right m-1" page-model="@Model.PaginationInfo" page-action="ProductList" page-class-enabled="true" page-class="btn"
+         page-class-normal="btn-outline-dark" page-class-selected="btn-primary" page-url-category="@Model.CurrentProductType!" page-url-color="@Model.CurrentColor!">
+    </div>
+</div>
+<script>
+    // JavaScript to handle changing the page size
+    document.addEventListener("DOMContentLoaded", function () {
+        var pageSizeDropdown = document.getElementById("pageSize");
+        // Function to set the selected page size
+        function setSelectedPageSize() {
+            var currentPageSize = @Model.PaginationInfo.ItemsPerPage; // Getting the current page size from the model
+            for (var i = 0; i < pageSizeDropdown.options.length; i++) {
+                if (pageSizeDropdown.options[i].value === currentPageSize.toString()) {
+                    pageSizeDropdown.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+        // Call the function to set the selected page size
+        setSelectedPageSize();
+        // Event listener for when the page size changes
+        pageSizeDropdown.addEventListener("change", function () {
+            var pageSize = this.value;
+            updatePageSize(pageSize);
+        });
+    });
+    // Function to update page size
+    function updatePageSize(pageSize) {
+        var currentPageUrl = window.location.href;
+        var url = new URL(currentPageUrl);
+        url.searchParams.set('pageSize', pageSize);
+        url.searchParams.delete('productPage'); // Remove productPage parameter to clean up the URL
+        window.location.href = url.toString();
+    }
+</script>
+
