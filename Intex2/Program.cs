@@ -110,9 +110,8 @@ internal class Program
 
         builder.Services.AddRazorPages();
 
-        builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddRoles<IdentityRole>();
+        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddEntityFrameworkStores<ApplicationDbContext>();
 
         // Add role-based policy
         builder.Services.AddAuthorization(options =>
@@ -175,19 +174,19 @@ internal class Program
         }
 
 
-        string modelPath = "C:\\Users\\kbangerter\\source\\repos\\lorincostley\\Intex2_group1_7\\Intex2\\gradient_model.onnx";
+        //string modelPath = "C:\\Users\\kbangerter\\source\\repos\\lorincostley\\Intex2_group1_7\\Intex2\\gradient_model.onnx";
 
-        // Load the model
-        var sessionOptions = new Microsoft.ML.OnnxRuntime.SessionOptions();
-        using (var session = new InferenceSession(modelPath, sessionOptions))
-        {
-            // Model loaded successfully, you can use the session for inference
-            // For example, you can run inference on input data
-            // var inputTensor = ...; // Prepare input tensor
-            // var results = session.Run(...); // Perform inference
-        }
+        //// Load the model
+        //var sessionOptions = new Microsoft.ML.OnnxRuntime.SessionOptions();
+        //using (var session = new InferenceSession(modelPath, sessionOptions))
+        //{
+        //    // Model loaded successfully, you can use the session for inference
+        //    // For example, you can run inference on input data
+        //    // var inputTensor = ...; // Prepare input tensor
+        //    // var results = session.Run(...); // Perform inference
+        //}
 
-        Console.WriteLine("Model loaded successfully.");
+        //Console.WriteLine("Model loaded successfully.");
 
 
 
@@ -202,16 +201,16 @@ internal class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.Use(async (ctx, next) =>
-        {
-            ctx.Response.Headers.Append("Content-Security-Policy",
-            "default-src 'self';" +
-            "script-src 'self' https://stackpath.bootstrapcdn.com/ 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=';" +
-            "img-src data: https:;" +
-            "style-src https://stackpath.bootstrapcdn.com/ 'self' 'unsafe-inline';" +
-            "connect-src 'self' wss: http://localhost:52827 ws://localhost:52827");
-            await next();
-        });
+        //app.Use(async (ctx, next) =>
+        //{
+        //    ctx.Response.Headers.Append("Content-Security-Policy",
+        //    "default-src 'self';" +
+        //    "script-src 'self' https://stackpath.bootstrapcdn.com/ 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=';" +
+        //    "img-src data: https:;" +
+        //    "style-src https://stackpath.bootstrapcdn.com/ 'self' 'unsafe-inline';" +
+        //    "connect-src 'self' wss: http://localhost:52827 ws://localhost:52827");
+        //    await next();
+        //});
 
         app.MapControllerRoute("pagenumandtype", "{projectType}/{pageNum}", new { Conroller = "Home", action = "Index" });
         app.MapControllerRoute("projectType", "{projectType}", new { Controller = "Home", action = "Index", pageNum = 1 });
