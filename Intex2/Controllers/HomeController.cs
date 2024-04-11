@@ -14,10 +14,15 @@ namespace Intex2.Controllers
     {
 
         private ILegoRepository _repo;
+        private readonly InferenceSession _session;
+        private readonly string _onnxModelPath;
 
-        public HomeController(ILegoRepository temp)
+        public HomeController(ILegoRepository temp, IHostEnvironment hostEnvironment)
         {
             _repo = temp;
+
+            _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "gradient_model.onnx");
+            _session = new InferenceSession(_onnxModelPath);
 
         } 
 
@@ -71,47 +76,75 @@ namespace Intex2.Controllers
         }
 
         [HttpPost]
-        public IActionResult Predict(int customer, string card, string bank, string type, string mode, int amount, string country, string address)
+        public IActionResult Predict(OrderPredictionViewModel OrderModel)
         {
-            country = "USA";
+
+            int id = OrderModel.Customer.CustomerId;
+
+            OrderModel.Orders.CustomerId = id;
+
+            // Get the current date and time
+            DateTime now = DateTime.Now;
+
+            DateOnly dateOnly = DateOnly.FromDateTime(DateTime.Today);
+
+            // Get the day of the week (e.g., "Tues")
+            string day = now.ToString("ddd");
+
+            // Get the time as an integer (e.g., 13 for 1:00 PM)
+            int time = now.Hour;
+
+            OrderModel.Orders.Date = dateOnly;
+            OrderModel.Orders.Time = time;
+            OrderModel.Orders.DayOfWeek = day;
+
+            
             var input = new List<float>
                 {
                     (float)time,
-                    (float)amount,
+                    (float)OrderModel.Orders.Amount,
 
-                    day == "Mon" ? 1 : 0,
-                    day == "Tue" ? 1 : 0,
-                    day == "Wed" ? 1 : 0,
-                    day == "Thu" ? 1 : 0,
-                    day == "Sat" ? 1 : 0,
-                    day == "Sun" ? 1 : 0,
-
-                    mode == "CVC" ? 1 : 0,
-
-                    type == "Online" ? 1 : 0,
-
-                    country == "USA" ? 1 : 0,
+                    OrderModel.Orders.DayOfWeek == "Mon" ? 1 : 0,
+                    OrderModel.Orders.DayOfWeek == "Sat" ? 1 : 0,
+                    OrderModel.Orders.DayOfWeek == "Sun" ? 1 : 0,
+                    OrderModel.Orders.DayOfWeek == "Thu" ? 1 : 0,
+                    OrderModel.Orders.DayOfWeek == "Tue" ? 1 : 0,
+                    OrderModel.Orders.DayOfWeek == "Wed" ? 1 : 0,
 
 
-                    address == "India" ? 1 : 0,
-                    address == "Russia" ? 1 : 0,
-                    address == "USA" ? 1 : 0,
-                    address == "UnitedKingdom" ? 1 : 0,
+                    OrderModel.Orders.EntryMode == "PIN" ? 1 : 0,
+                    OrderModel.Orders.EntryMode == "Tap" ? 1 : 0,
 
-                    bank == "HSBC" ? 1 : 0,
-                    bank == "Halifax" ? 1 : 0,
-                    bank == "Lloyds" ? 1 : 0,
-                    bank == "Metro" ? 1 : 0,
-                    bank == "Monzo" ? 1 : 0,
-                    bank == "RBS" ? 1 : 0,
-                    bank == "RBS" ? 1 : 0,
+                    OrderModel.Orders.TypeOfCard == "Online" ? 1 : 0,
+                    OrderModel.Orders.TypeOfCard == "POS" ? 1 : 0,
 
-                    card == "Visa" ? 1 : 0,
-                    card == "Master Card" ? 1 : 0
+
+                    OrderModel.Orders.CountryOfTransaction == "India" ? 1 : 0,
+                    OrderModel.Orders.CountryOfTransaction == "Russia" ? 1 : 0,
+                    OrderModel.Orders.CountryOfTransaction == "USA" ? 1 : 0,
+                    OrderModel.Orders.CountryOfTransaction == "UnitedKingdom" ? 1 : 0,
+
+
+                    OrderModel.Orders.ShippingAddress == "India" ? 1 : 0,
+                    OrderModel.Orders.ShippingAddress == "Russia" ? 1 : 0,
+                    OrderModel.Orders.ShippingAddress == "USA" ? 1 : 0,
+                    OrderModel.Orders.ShippingAddress == "UnitedKingdom" ? 1 : 0,
+
+                    OrderModel.Orders.Bank == "HSBC" ? 1 : 0,
+                    OrderModel.Orders.Bank == "Halifax" ? 1 : 0,
+                    OrderModel.Orders.Bank == "Lloyds" ? 1 : 0,
+                    OrderModel.Orders.Bank == "Metro" ? 1 : 0,
+                    OrderModel.Orders.Bank == "Monzo" ? 1 : 0,
+                    OrderModel.Orders.Bank == "RBS" ? 1 : 0,
+                    OrderModel.Orders.Bank == "RBS" ? 1 : 0,
+
+                    OrderModel.Orders.TypeOfCard == "Visa" ? 1 : 0,
             };
 
 
-            var input = new List<float> { time, amount, feathers, mon, sat, sun, thu, tue, wed, pin, tap, online, pos, india, russia, usa, uk, hsbc, halifax, lloyds, metro, monzo, rbs, visa };
+
+
+            //var input = new List<float> { time, amount, feathers, mon, sat, sun, thu, tue, wed, pin, tap, online, pos, india, russia, usa, uk, hsbc, halifax, lloyds, metro, monzo, rbs, visa };
             var inputTensor = new DenseTensor<float>(input.ToArray(), new[] { 1, input.Count });
 
             var inputs = new List<NamedOnnxValue>
@@ -119,23 +152,26 @@ namespace Intex2.Controllers
                     NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
             };
 
+            var view = "Confirmation";
+
             using (var results = _session.Run(inputs)) // makes the prediction with the inputs from the form (i.e. class_type 1-7)
             {
                 var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
-                if (prediction != null && prediction.Length > 0)
+                var fraudprediction = (int)prediction[0];
+
+                if (fraudprediction == 1)
                 {
-                    // Use the prediction to get the animal type from the dictionary
-                    var fraudprediction = class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown");
-                    ViewBag.Prediction = fraudprediction;
+                    view = "Confirmation_NeedsVerification";
                 }
-                else
-                {
-                    ViewBag.Prediction = "Error: Unable to make a prediction.";
-                }
+            OrderModel.Orders.Fraud = fraudprediction;
             }
 
 
-            return View(fraudprediction);
+
+            // Save the order object to the database
+            _repo.AddOrder(OrderModel.Orders);
+
+            return View(view);
         }
 
         public IActionResult Index()

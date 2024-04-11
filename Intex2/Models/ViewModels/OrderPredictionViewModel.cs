@@ -4,7 +4,6 @@
     {
         public Order Orders { get; set; }
         public Customer Customer { get; set; }
-        public PaginationInfo PaginationInfo { get; set; } = new PaginationInfo();
         public string Prediction { get; set; }
     }
 }
