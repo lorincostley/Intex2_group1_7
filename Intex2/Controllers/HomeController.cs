@@ -12,20 +12,11 @@ namespace Intex2.Controllers
     {
 
         private ILegoRepository _repo;
-        private readonly InferenceSession _session;
 
         public HomeController(ILegoRepository temp)
         {
             _repo = temp;
 
-            // Initialize the InferenceSession here; ensure the path is correct.
-            try
-            {
-                _session = new InferenceSession(@"C:\\Users\\kbangerter\\source\\repos\\lorincostley\\Intex2_group1_7\\Intex2\\gradient_model.onnx");
-            }
-            catch (Exception ex)
-            {
-            }
         } 
 
         [Authorize]
@@ -141,6 +132,92 @@ namespace Intex2.Controllers
             return RedirectToAction("SignUp");
         }
         public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        //public IActionResult Admin_Orders()
+        //{
+        //    var records = _repo.Orders
+        //        .OrderByDescending(o => o.Date)
+        //        .Take(25)
+        //        .ToList();
+        //    var predictions = new List<OrderPredictionViewModel>(); //Viewmodel for the view
+
+        //    var class_type_dict = new Dictionary<int, string>
+        //    {
+        //        { 0, "Not Fraud" },
+        //        { 1, "Fraud" }
+        //    };
+
+        //    foreach (var record in records)
+        //    {
+
+        //        var input = new List<float>
+        //        {
+        //            (float)record.Time,
+        //            (float)(record.Amount ?? 0),
+
+        //            record.DayOfWeek == "Mon" ? 1 : 0,
+        //            record.DayOfWeek == "Tue" ? 1 : 0,
+        //            record.DayOfWeek == "Wed" ? 1 : 0,
+        //            record.DayOfWeek == "Thu" ? 1 : 0,
+        //            record.DayOfWeek == "Sat" ? 1 : 0,
+        //            record.DayOfWeek == "Sun" ? 1 : 0,
+
+        //            record.EntryMode == "PIN" ? 1 : 0,
+        //            record.EntryMode == "Tap" ? 1 : 0,
+
+        //            record.TypeOfTransaction == "Online" ? 1 : 0,
+        //            record.TypeOfTransaction == "POS" ? 1 : 0,
+
+
+        //            record.CountryOfTransaction == "India" ? 1 : 0,
+        //            record.CountryOfTransaction == "Russia" ? 1 : 0,
+        //            record.CountryOfTransaction == "USA" ? 1 : 0,
+        //            record.CountryOfTransaction == "UnitedKingdom" ? 1 : 0,
+
+        //            (record.ShippingAddress ?? record.CountryOfTransaction) == "India" ? 1 : 0,
+        //            (record.ShippingAddress ?? record.CountryOfTransaction) == "Russia" ? 1 : 0,
+        //            (record.ShippingAddress ?? record.CountryOfTransaction) == "USA" ? 1 : 0,
+        //            (record.ShippingAddress ?? record.CountryOfTransaction) == "UnitedKingdom" ? 1 : 0,
+
+        //            record.Bank == "HSBC" ? 1 : 0,
+        //            record.Bank == "Halifax" ? 1 : 0,
+        //            record.Bank == "Lloyds" ? 1 : 0,
+        //            record.Bank == "Metro" ? 1 : 0,
+        //            record.Bank == "Monzo" ? 1 : 0,
+        //            record.Bank == "RBS" ? 1 : 0,
+
+        //            record.TypeOfCard == "Visa" ? 1 : 0
+        //        };
+
+        //        var inputTensor = new DenseTensor<float>(input.ToArray(), new[] { 1, input.Count } );
+
+        //        var inputs = new List<NamedOnnxValue>
+        //        {
+        //            NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
+        //        };
+
+        //        string predictionResult;
+        //        using (var results = _session.Run(inputs))
+        //        {
+        //            var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
+        //            predictionResult = prediction != null && prediction.Length > 0 ? class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown") : "Error in prediction";
+        //        }
+
+        //        predictions.Add(new OrderPredictionViewModel { Orders = record, Prediction = predictionResult });
+
+        //    }
+
+
+        //    return View(predictions);
+        //}
+        public IActionResult Admin_Products()
+        {
+            return View();
+        }
+        public IActionResult Admin_Users()
         {
             return View();
         }
