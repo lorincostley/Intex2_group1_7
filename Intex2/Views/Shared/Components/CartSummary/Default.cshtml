@@ -8,7 +8,7 @@
 @using Intex2.Infrastructure;
 
 <div class="">
-    @if (Model.Lines.Count() > 0)
+    @if (Model.Lines.Count() > 0) 
     {
         <small class="navbar-text">
             <b>Your Cart:</b>@Model.Lines.Sum(x => x.Quantity) items(s)

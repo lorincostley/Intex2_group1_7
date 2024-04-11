@@ -6,7 +6,7 @@ namespace Intex2.Models;
 public partial class Product
 {
     public int ProductId { get; set; }
-
+    
     public string Name { get; set; } = null!;
 
     public int Year { get; set; }
