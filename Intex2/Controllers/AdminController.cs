@@ -7,6 +7,7 @@ using Microsoft.ML.OnnxRuntime.Tensors;
 using NuGet.ProjectModel;
 using NuGet.Protocol.Core.Types;
 using System.Drawing.Printing;
+using System.Reflection.Metadata;
 
 namespace Intex2.Controllers
 {
@@ -28,33 +29,12 @@ namespace Intex2.Controllers
 
         public IActionResult Admin_Orders(int pageNum)
         {
-            //int pageSize = 20;
-            //if (pageNum < 1)
-            //{
-            //    pageNum = 1;
-            //}
-            //var products = _repo.Orders.ToList();
-            //var viewModel = new AdminViewModel
-            //{
-            //    Orders = _repo.Orders
-            //                .OrderBy(x => x.TransactionId)
-            //                .Skip(pageSize * (pageNum - 1))
-            //                .Take(pageSize),
 
-            //    PaginationInfo = new PaginationInfo
-            //    {
-            //        CurrentPage = pageNum,
-            //        ItemsPerPage = pageSize,
-            //        TotalItems = _repo.Products.Count()
-            //    },
-            //};
-
-            //return View(viewModel);
             var records = _repo.Orders
-    .OrderByDescending(o => o.Date)
-    .Take(150)
-    .ToList();
-            var predictions = new List<OrderPredictionViewModel>(); //Viewmodel for the view
+                .OrderByDescending(o => o.Date)
+                .Take(150)
+                .ToList();
+            var predictions = new List<OrderPredictionViewModel>(); 
 
             var class_type_dict = new Dictionary<int, string>
             {
@@ -125,6 +105,9 @@ namespace Intex2.Controllers
 
             return View(predictions);
         }
+
+        
+
 
         //--------------------------------------------------------------------------------
 

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
+using Humanizer;
+using Microsoft.AspNetCore.Http;
 
 namespace Intex2.Controllers 
 {
@@ -66,6 +68,74 @@ namespace Intex2.Controllers
                 CurrentProductType = productType
             };
             return View(blah);
+        }
+
+        [HttpPost]
+        public IActionResult Predict(int customer, string card, string bank, string type, string mode, int amount, string country, string address)
+        {
+            country = "USA";
+            var input = new List<float>
+                {
+                    (float)time,
+                    (float)amount,
+
+                    day == "Mon" ? 1 : 0,
+                    day == "Tue" ? 1 : 0,
+                    day == "Wed" ? 1 : 0,
+                    day == "Thu" ? 1 : 0,
+                    day == "Sat" ? 1 : 0,
+                    day == "Sun" ? 1 : 0,
+
+                    mode == "CVC" ? 1 : 0,
+
+                    type == "Online" ? 1 : 0,
+
+                    country == "USA" ? 1 : 0,
+
+
+                    address == "India" ? 1 : 0,
+                    address == "Russia" ? 1 : 0,
+                    address == "USA" ? 1 : 0,
+                    address == "UnitedKingdom" ? 1 : 0,
+
+                    bank == "HSBC" ? 1 : 0,
+                    bank == "Halifax" ? 1 : 0,
+                    bank == "Lloyds" ? 1 : 0,
+                    bank == "Metro" ? 1 : 0,
+                    bank == "Monzo" ? 1 : 0,
+                    bank == "RBS" ? 1 : 0,
+                    bank == "RBS" ? 1 : 0,
+
+                    card == "Visa" ? 1 : 0,
+                    card == "Master Card" ? 1 : 0
+            };
+
+
+            var input = new List<float> { time, amount, feathers, mon, sat, sun, thu, tue, wed, pin, tap, online, pos, india, russia, usa, uk, hsbc, halifax, lloyds, metro, monzo, rbs, visa };
+            var inputTensor = new DenseTensor<float>(input.ToArray(), new[] { 1, input.Count });
+
+            var inputs = new List<NamedOnnxValue>
+                {
+                    NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
+            };
+
+            using (var results = _session.Run(inputs)) // makes the prediction with the inputs from the form (i.e. class_type 1-7)
+            {
+                var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
+                if (prediction != null && prediction.Length > 0)
+                {
+                    // Use the prediction to get the animal type from the dictionary
+                    var fraudprediction = class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown");
+                    ViewBag.Prediction = fraudprediction;
+                }
+                else
+                {
+                    ViewBag.Prediction = "Error: Unable to make a prediction.";
+                }
+            }
+
+
+            return View(fraudprediction);
         }
 
         public IActionResult Index()
