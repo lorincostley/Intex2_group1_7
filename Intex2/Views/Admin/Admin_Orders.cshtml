@@ -1,0 +1,121 @@
+﻿@*ORDERS*@
+@model AdminViewModel
+
+<br />
+<div class="row">
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Admin" asp-action="Admin_Products" style="text-align:center; color:black; font-size:large">Products</a>
+    </div>
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Admin" asp-action="Admin_Users" style="text-align:center; color:black; font-size:large;">Users</a>
+    </div> 
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Admin" asp-action="Admin_Orders" style="text-align:center; color:black; font-size:larger; font-weight:bold">Orders</a>
+    </div>
+</div>
+<br /><br />
+<h3 style="text-align:center">Potentially Fraudulent Orders</h3>
+<div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Transaction ID</td>
+                <td>Customer ID</td>
+                <td>Date</td>
+                <td>Day of Week</td>
+                <td>Time</td>
+                <td>Entry Mode</td>
+                <td>Amount</td>
+                <td>Transaction Type</td>
+                <td>Country</td>
+                <td>Shipping Address</td>
+                <td>Bank</td>
+                <td>Type of Card</td>
+                <td>Accept</td>
+                <td>Deny</td>
+            </tr>
+
+        </thead>
+
+        @foreach (var x in Model.Orders)
+        {
+            <tbody>
+                <tr>
+                    <td>@x.TransactionId</td>
+                    <td>@x.CustomerId</td>
+                    <td>@x.Date</td>
+                    <td>@x.DayOfWeek</td>
+                    <td>@x.Time</td>
+                    <td>@x.EntryMode</td>
+                    <td>@x.Amount</td>
+                    <td>@x.TypeOfTransaction</td>
+                    <td>@x.CountryOfTransaction</td>
+                    <td>@x.ShippingAddress</td>
+                    <td>@x.Bank</td>
+                    <td>@x.TypeOfCard</td>
+
+@*                     ADD ICONS
+                *@
+                    <td><a class="btn btn-info" asp-controller="Admin" asp-action="Edit" asp-route-id="@x.TransactionId">Accept</a></td>
+                    <td><a class="btn btn-danger" asp-controller="Admin" asp-action="Delete" asp-route-id="@x.TransactionId">Deny</a></td> @* ADD A DELETE CONFIRMATION PAGE/WINDOW *@
+                </tr>
+            </tbody>
+        } 
+
+    </table>
+
+    <br /><br />
+    <h3 style="text-align:center">Processed Orders</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Transaction ID</td>
+                <td>Customer ID</td>
+                <td>Date</td>
+                <td>Day of Week</td>
+                <td>Time</td>
+                <td>Entry Mode</td>
+                <td>Amount</td>
+                <td>Transaction Type</td>
+                <td>Country</td>
+                <td>Shipping Address</td>
+                <td>Bank</td>
+                <td>Type of Card</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+
+        </thead>
+
+         @foreach (var x in Model.Orders)
+        {
+            <tbody>
+                <tr>
+                    <td>@x.TransactionId</td>
+                    <td>@x.CustomerId</td>
+                    <td>@x.Date</td>
+                    <td>@x.DayOfWeek</td>
+                    <td>@x.Time</td>
+                    <td>@x.EntryMode</td>
+                    <td>@x.Amount</td>
+                    <td>@x.TypeOfTransaction</td>
+                    <td>@x.CountryOfTransaction</td>
+                    <td>@x.ShippingAddress</td>
+                    <td>@x.Bank</td>
+                    <td>@x.TypeOfCard</td>
+
+@*                     ADD ICONS
+                *@
+                    <td><a class="btn btn-info" asp-controller="Admin" asp-action="Edit" asp-route-id="@x.TransactionId">Edit</a></td>
+                    <td><a class="btn btn-danger" asp-controller="Admin" asp-action="Delete" asp-route-id="@x.TransactionId">Delete</a></td> @*ADD A DELETE CONFIRMATION PAGE/WINDOW*@
+                </tr>
+            </tbody>
+        } 
+
+    </table>
+</div>
+
+<div page-model="@Model.PaginationInfo" page-action="Admin_Orders" page-class-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+     class="btn-group pull-right m-1">
+</div> 

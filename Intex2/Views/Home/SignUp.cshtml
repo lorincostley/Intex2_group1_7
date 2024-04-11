@@ -66,15 +66,22 @@
         cursor: pointer;
         color: #ccc;
     }
-</style>
 
+    .container-signup {
+        width: 90%; /* Adjust the width as needed */
+        max-width: 1200px; /* Optional: Set a maximum width for larger screens */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 0 20px; /* Add padding on the sides */
+        box-sizing: border-box; /* Include padding in the width calculation */
+    }
+</style>
+<title>Register</title>
+<div class="container-signup" style="text-align:center">
     <br />
     <div class="center-image">
         <img src="~/legosignupman.jpeg" style="height: 95px;" alt="Lego Signup Man Image" />
     </div>
     <br />
-    <br />
-
     <form>
     <div>
         <input type="text" class="pill-input" placeholder="First Name" />
@@ -354,3 +361,4 @@
     <br />
     <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; padding: 10px 20px; font-size: 16px; display: block; margin: 0 auto;" class="rounded-pill">Submit</button>
     </form>
+</div>

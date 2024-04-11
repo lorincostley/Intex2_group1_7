@@ -1,0 +1,73 @@
+﻿@*USERS*@
+@* @model List<Customer>
+ *@
+ 
+@model AdminViewModel
+ 
+ <br /> 
+<div class="row">
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Admin" asp-action="Admin_Products" style="text-align:center; color:black; font-size:large">Products</a>
+    </div>
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Admin" asp-action="Admin_Users" style="text-align:center; color:black; font-size:larger; font-weight:bold">Users</a>
+    </div>
+    <div class="col-4" style="text-align:center">
+        <a asp-area="" asp-controller="Admin" asp-action="Admin_Orders" style="text-align:center; color:black; font-size:large">Orders</a>
+    </div>
+</div>
+
+<br />
+<br />
+<div>
+    <table class="table table-bordered"> 
+        <thead>
+            <tr>
+                <td>Customer ID</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Birth Date</td>
+                <td>Country</td>
+                <td>Gender</td>
+                <td>Age</td>
+                <td>Email</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+
+        </thead>
+
+        @foreach (var x in Model.Customers)
+        {
+        <tbody>
+        <tr>
+        <td>@x.CustomerId</td>
+        <td>@x.FirstName</td>
+        <td>@x.LastName</td>
+        <td>@x.BirthDate</td>
+        <td>@x.CountryOfResidence</td>
+        <td>@x.Gender</td>
+        <td>@string.Format("{0:0.0}", x.Age)</td>
+        <td>@x.CustEmail</td>
+        <td>
+            <a asp-controller ="Admin" asp-action="Admin_Edit_User" asp-route-id="@x.CustomerId">
+            <img src="~/pencil.jpg" alt="Edit" style="height:25px" />
+            </a>
+        </td>
+        <td>
+            <a asp-controller="Admin" asp-action="Admin_Delete_User" asp-route-id="@x.CustomerId">
+                <img src="~/blacktrashcan.jpg" alt="Delete" style="height:25px"/>
+            </a>
+        </td>
+        </tr>
+        </tbody>
+        } 
+
+    </table>
+</div>
+
+<div page-model="@Model.PaginationInfo" page-action="Admin_Users" page-class-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+     class="btn-group pull-right m-1">
+</div> 
+

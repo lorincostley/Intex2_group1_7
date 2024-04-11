@@ -1,11 +1,9 @@
-﻿@* @model ----
- *@
-<style>
-    .pill-input {
+﻿<style>
+    .pill-input-login {
         border: 1px solid #ccc;
         border-radius: 30px; /* Adjust the value for desired roundness */
         padding: 8px 12px;
-        width: 100%; /* Adjust as needed */
+        width: 40%; /* Adjust as needed */
         box-sizing: border-box;
     }
 
@@ -16,21 +14,33 @@
         width: 100%; /* Adjust as needed */
         box-sizing: border-box;
     }
+
+    .container-login {
+        width: 90%; /* Adjust the width as needed */
+        max-width: 1200px; /* Optional: Set a maximum width for larger screens */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 0 20px; /* Add padding on the sides */
+        box-sizing: border-box; /* Include padding in the width calculation */
+    }
 </style>
 
-<h1>Sign In</h1>
 
+<div class="container-login" style="text-align:center">
+<br />
+<h1>Sign In</h1>
+<br />
 <form method="post">
 @*     <input type="hidden" asp-for="customer_ID" />
  *@
 @*     <label asp-for="username"></label>
- *@    <input type="text" class="pill-input" placeholder="Username/Email" />
+ *@    <input type="text" class="pill-input-login" placeholder="Username/Email" />
     <br /><br />
 @*     <label asp-for="password"></label>
- *@    <input type="password" class="pill-input" placeholder="Password" />
+ *@    <input type="password" class="pill-input-login" placeholder="Password" />
     <br /><br />
     <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; padding: 10px 20px; font-size: 16px; display: block; margin: 0 auto;" class="rounded-pill">Sign In</button>
     <div style="color: #5b64d1;" class="text-center">
         <a asp-area="" asp-controller="Home" asp-action="SignUp">Don't have an account? <u>Sign Up</u></a>
     </div>
 </form>
+</div>

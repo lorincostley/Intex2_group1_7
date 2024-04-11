@@ -1,0 +1,34 @@
+﻿@model Product
+
+<form method="post">
+    <input asp-for="ProductId" type="hidden" />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Year</th>
+                <th># of Parts</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Primary Color</th>
+                <th>Secondary Color</th>
+                <th>Description</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input asp-for="Name" /></td>
+                <td><input asp-for="Year" /></td>
+                <td><input asp-for="NumParts" /></td>
+                <td><input asp-for="Price" /></td>
+                <td><input asp-for="ImgLink" /></td>
+                <td><input asp-for="PrimaryColor" /></td>
+                <td><input asp-for="SecondaryColor" /></td>
+                <td><textarea asp-for="Description"></textarea></td>
+                <td><input asp-for="Category" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit">Submit Product</button>
+</form>

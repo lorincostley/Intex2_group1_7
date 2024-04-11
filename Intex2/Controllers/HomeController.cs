@@ -136,19 +136,6 @@ namespace Intex2.Controllers
             return View();
         }
 
-        public IActionResult Admin_Orders()
-        {
-            return View();
-        }
-        public IActionResult Admin_Products()
-        {
-            return View();
-        }
-        public IActionResult Admin_Users()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
