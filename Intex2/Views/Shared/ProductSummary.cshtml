@@ -2,8 +2,8 @@
 @model Product
 
 <div class="col mb-5">
-    <div class="card h-100" style="height: 100px; display: flex; flex-direction: column; justify-content: space-between;">
-        <img class="card-img-top" src="~/SimpleLegoMan.jpg" style="max-width: 100%; height: auto;" />
+    <div class="card h-100 shadow" style="height: 100px; display: flex; flex-direction: column; justify-content: space-between; border: none;">
+        <img class="card-img-top" src="@Model.ImgLink" style="max-width: 100%; height: auto;" />
         <div class="card-body">
             <h2 class="card-title">@Model.Name</h2>
             <ul class="list-unstyled">
@@ -21,3 +21,4 @@
         </div>
     </div>
 </div>
+

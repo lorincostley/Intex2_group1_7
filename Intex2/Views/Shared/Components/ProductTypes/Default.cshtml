@@ -1,23 +1,19 @@
 ﻿@model IQueryable<string>
 
-<div class="container px-4 px-lg-5 mt-5">
-    <div class="filter-box border rounded p-2" style="left:0 top: 50px">
         <div class="d-grid gap-2">
             <h5>Filters</h5>
-            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="ProductList" asp-route-productType="" asp-route-pageNum="">Home</a>
+            <a class="btn btn-sm btn-outline-secondary" asp-controller="Home" asp-action="ProductList" asp-route-productType="" asp-route-pageNum="">Home</a>
             <br />
             <p>Category</p>
-            @foreach (string pt in Model ?? Enumerable.Empty<string>()) 
+            @foreach (string pt in Model ?? Enumerable.Empty<string>())
             {
-                <a class="btn @(pt == ViewBag.SelectedProductType ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="ProductList" asp-route-productType="@pt" asp-route-pageNum="1">@pt</a>
+                <a class="btn btn-sm @(pt == ViewBag.SelectedProductType ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="ProductList" asp-route-productType="@pt" asp-route-pageNum="1">@pt</a>
             }
             <br />
             <p>Color</p>
             @foreach (string color in Model ?? Enumerable.Empty<string>())
             {
-                <a class="btn @(color == ViewBag.SelectedPrimaryColor ? "btn-primary" : "btn-outline-secondary")"
+                <a class="btn btn-sm @(color == ViewBag.SelectedPrimaryColor ? "btn-primary" : "btn-outline-secondary")"
                    asp-controller="Home" asp-action="ProductList" asp-route-color="@color" asp-route-pageNum="1">@color</a>
             }
         </div>
-    </div>
-</div>
