@@ -174,20 +174,6 @@ internal class Program
         }
 
 
-        string modelPath = "C:\\Users\\kbangerter\\source\\repos\\lorincostley\\Intex2_group1_7\\Intex2\\gradient_model.onnx";
-
-        // Load the model
-        var sessionOptions = new Microsoft.ML.OnnxRuntime.SessionOptions();
-        using (var session = new InferenceSession(modelPath, sessionOptions))
-        {
-            // Model loaded successfully, you can use the session for inference
-            // For example, you can run inference on input data
-            // var inputTensor = ...; // Prepare input tensor
-            // var results = session.Run(...); // Perform inference
-        }
-
-        Console.WriteLine("Model loaded successfully.");
-
 
 
 
