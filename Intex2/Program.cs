@@ -9,6 +9,8 @@ using Azure.Core;
 using Intex2.Models;
 using Microsoft.AspNetCore.Builder;
 using System.Drawing.Text;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 internal class Program
 {
@@ -164,6 +166,24 @@ internal class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
+
+
+        string modelPath = "C:\\Users\\kbangerter\\source\\repos\\lorincostley\\Intex2_group1_7\\Intex2\\gradient_model.onnx";
+
+        // Load the model
+        var sessionOptions = new Microsoft.ML.OnnxRuntime.SessionOptions();
+        using (var session = new InferenceSession(modelPath, sessionOptions))
+        {
+            // Model loaded successfully, you can use the session for inference
+            // For example, you can run inference on input data
+            // var inputTensor = ...; // Prepare input tensor
+            // var results = session.Run(...); // Perform inference
+        }
+
+        Console.WriteLine("Model loaded successfully.");
+
+
+
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
