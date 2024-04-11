@@ -179,6 +179,8 @@ namespace Intex2.Controllers
             return RedirectToAction("Admin_Products");
         }
 
+        //EDIT
+
         [HttpGet]
         public IActionResult Admin_Edit_Product(int id)
         {
@@ -195,6 +197,30 @@ namespace Intex2.Controllers
 
             return RedirectToAction("Admin_Products");
         }
+
+[HttpGet]
+public IActionResult Admin_Add_Product()
+{
+    // Create a new instance of Product to pass to the view
+    var newProduct = new Product();
+    return View(newProduct);
+}
+
+// POST: Handle the form submission for adding a new product
+[HttpPost]
+public IActionResult Admin_Add_Product(Product newProduct)
+{
+    if (ModelState.IsValid)
+    {
+        _repo.AddProduct(newProduct); // Add the new product to the repository
+        return RedirectToAction("Admin_Products"); // Redirect to the product list page
+    }
+    else
+    {
+        // If the model state is not valid, return the view with validation errors
+        return View(newProduct);
+    }
+}
 
 
         //--------------------------------------------------------------------------------
