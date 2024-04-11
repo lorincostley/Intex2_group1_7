@@ -52,7 +52,7 @@ namespace Intex2.Controllers
             //return View(viewModel);
             var records = _repo.Orders
     .OrderByDescending(o => o.Date)
-    .Take(25)
+    .Take(150)
     .ToList();
             var predictions = new List<OrderPredictionViewModel>(); //Viewmodel for the view
 
