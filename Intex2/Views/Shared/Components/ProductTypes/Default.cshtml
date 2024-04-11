@@ -1,7 +1,7 @@
 ﻿@model IQueryable<string>
 
 <div class="container px-4 px-lg-5 mt-5">
-    <div class="filter-box border rounded p-2 position-fixed" style="left:0 top: 50px">
+    <div class="filter-box border rounded p-2" style="left:0 top: 50px">
         <div class="d-grid gap-2">
             <h5>Filters</h5>
             <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="ProductList" asp-route-productType="" asp-route-pageNum="">Home</a>
@@ -13,11 +13,11 @@
             }
             <br />
             <p>Color</p>
-            @* @foreach (string color in Model.Colors ?? Enumerable.Empty<string>())
+            @foreach (string color in Model ?? Enumerable.Empty<string>())
             {
-                <a class="btn @(color == ViewBag.SelectedColor ? "btn-primary" : "btn-outline-secondary")"
+                <a class="btn @(color == ViewBag.SelectedPrimaryColor ? "btn-primary" : "btn-outline-secondary")"
                    asp-controller="Home" asp-action="ProductList" asp-route-color="@color" asp-route-pageNum="1">@color</a>
-            } *@
+            }
         </div>
     </div>
 </div>

@@ -11,7 +11,7 @@
             <!-- Filter options -->
             <vc:product-types />
         </div>
-        <div class="product-list" style="padding-left: 200px">
+<div class="product-list" style="padding-left: 300px; padding-right: 100px;">
            <div class="container px-12 mt-1">
               <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 justify-content-center"> 
                 <!-- Product list -->
@@ -26,7 +26,7 @@
 
 
     <div class="row mt-4">
-        <div class="col-md-6" style="text-align:center">
+    <div class="col-md-4.5 text-end" style="text-align:center">
             <!-- Pagination -->
             <div page-model="@Model.PaginationInfo" page-action="ProductList" page-class-enabled="true"
                  page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
@@ -34,9 +34,9 @@
             </div>
         </div>
 
-        <div class="col-md-6 text-end">
+@*         <div class="col-md-6 text-end">
             <!-- Cart summary -->
             <vc:cart-summary />
-        </div>
+        </div> *@
     </div>
 </div>

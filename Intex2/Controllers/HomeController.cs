@@ -42,6 +42,10 @@ namespace Intex2.Controllers
         public IActionResult ProductList(int pageNum, string? productType)
         {
             int pageSize = 9;
+            if (pageNum < 1)
+            {
+                pageNum = 1;
+            }
 
             var blah = new ProductListViewModel
             {
