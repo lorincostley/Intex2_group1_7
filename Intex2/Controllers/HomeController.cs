@@ -6,7 +6,7 @@ using System.Diagnostics;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 
-namespace Intex2.Controllers
+namespace Intex2.Controllers 
 {
     public class HomeController : Controller
     {
