@@ -32,19 +32,51 @@ namespace Intex2.Controllers
             return View();
         }
 
-        public ActionResult ProductDetails(int ProductId, string Name, string ImgLink, int Price, string Description)
+        //public ActionResult ProductDetails(int ProductId, string Name, string ImgLink, int Price, string Description)
+        //{
+
+        //    var product = new Product
+        //    {
+        //        ProductId = ProductId,
+        //        Name = Name,
+        //        ImgLink = ImgLink,
+        //        Price = Price,
+        //        Description = Description
+        //    };
+
+        //    var blah = new ItemRecommendationViewModel
+        //    {
+        //        Products = product,
+        //    };
+
+        //    return View(product);
+        //}
+
+        public IActionResult ProductDetails(int id)
         {
+            Product product = _repo.Products
+              .FirstOrDefault(x => x.ProductId == id);
 
-            var product = new Product
+            ViewBag.Product = product;
+
+            Recommendation rec = _repo.Recommendations
+              .Where(x => x.recommendation_ID == id).First();
+
+            int[] recommendationIds =  new[]
             {
-                ProductId = ProductId,
-                Name = Name,
-                ImgLink = ImgLink,
-                Price = Price,
-                Description = Description
-            };
+                rec.recommendation_1,
+                rec.recommendation_2,
+                rec.recommendation_3,
+                rec.recommendation_4
+              };
 
-            return View(product);
+            List<Product> recommendationProducts = _repo.Products
+              .Where(x => recommendationIds.Contains(x.ProductId))
+              .ToList();
+
+            ViewBag.Recommendations = recommendationProducts;
+
+            return View();
         }
 
         public IActionResult ProductList(int pageNum, string? productType, string color, int pageSize = 5)
