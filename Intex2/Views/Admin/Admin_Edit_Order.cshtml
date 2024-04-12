@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Intex2.Models.ViewModels.OrderPredictionViewModel>
+
+<style>
+    .pill-input {
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        padding: 8px 12px;
+        width: 70%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    .label-text {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .container-help {
+        width: 90%;
+        margin: 0 auto;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+</style>
+
+<form method="post">
+    @foreach (var item in Model)
+    {
+        <input asp-for="@item.Customer.CustomerId" type="hidden" />
+        <div class="row container-help">
+            <div>
+                <br />
+                <h1 style="font-weight:bold; color: #5b64d1">Edit User</h1>
+                <br />
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Transaction ID</td>
+                            <td>Customer ID</td>
+                            <td>Date</td>
+                            <td>Day of Week</td>
+                            <td>Time</td>
+                            <td>Entry Mode</td>
+                            <td>Amount</td>
+                            <td>Transaction Type</td>
+                            <td>Country</td>
+                            <td>Shipping Address</td>
+                            <td>Bank</td>
+                            <td>Type of Card</td>
+                            <td>Fraud 1/0</td>
+                            <td>Fraud text</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input asp-for="@item.Orders.TransactionId" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.CustomerId" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.Date" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.DayOfWeek" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.Time" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.EntryMode" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.Amount" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.TypeOfTransaction" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.CountryOfTransaction" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.ShippingAddress" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.Bank" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.TypeOfCard" class="pill-input" /></td>
+                            <td><input asp-for="@item.Orders.Fraud" class="pill-input" /></td>
+                            <td><input asp-for="@item.Prediction" class="pill-input" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; padding: 10px 20px; font-size: 16px; display: block; margin: 0 auto;" class="rounded-pill">Save Edit</button>
+            </div>
+        </div>
+    }
+</form>
+<br />

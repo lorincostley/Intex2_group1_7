@@ -32,7 +32,7 @@ namespace Intex2.Pages
                 Cart.AddItem(proj, 1);
             }
 
-            return RedirectToPage("Confirmation");
+            return RedirectToPage(new { returnUrl = returnUrl});
         }
 
         public IActionResult OnPostRemove(int productId, string returnUrl)
@@ -41,6 +41,12 @@ namespace Intex2.Pages
             return RedirectToPage(new { returnUrl = returnUrl });
         }
 
+        public IActionResult OnPostCheckout(string returnUrl)
+        {
+            return RedirectToAction("Confirmation", new { returnUrl });
+        }
+
         public Product Product { get; set; }
+        public Order Order { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     public class OrderPredictionViewModel
     {
         public Order Orders { get; set; }
-        public PaginationInfo PaginationInfo { get; set; } = new PaginationInfo();
+        public Customer Customer { get; set; }
         public string Prediction { get; set; }
     }
 }
