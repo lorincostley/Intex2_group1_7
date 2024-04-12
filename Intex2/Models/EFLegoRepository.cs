@@ -74,6 +74,12 @@ namespace Intex2.Models
             _context.Remove(order);
             _context.SaveChanges();
         }
+
+        public void DeleteOrder(Order order)
+        {
+            _context.Orders.Remove(order);
+            _context.SaveChanges();
+        }
     }
 }
 

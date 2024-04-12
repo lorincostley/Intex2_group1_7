@@ -113,28 +113,40 @@ namespace Intex2.Controllers
         [HttpGet]
         public IActionResult Admin_Edit_Order(int id)
         {
-            var recordToEdit = _repo.Orders.SingleOrDefault(x => x.TransactionId == id);
+            var recordToEdit = _repo.Orders
+                .SingleOrDefault(x => x.TransactionId == id);
 
-            if (recordToEdit == null)
-            {
-                return NotFound(); // Return a 404 Not Found response if no record is found
-            }
-
-            return View(recordToEdit); // Pass the record directly to the view
+            return View(recordToEdit); // Pass the Product directly to the view
         }
 
         [HttpPost]
         public IActionResult Admin_Edit_Order(Order updatedInfo)
         {
-            var existingRecord = _repo.Orders.SingleOrDefault(x => x.TransactionId == updatedInfo.TransactionId);
-
-            if (existingRecord == null)
-            {
-                return NotFound(); // Return a 404 Not Found response if no record is found
-            }
-
             _repo.AdminUpdateOrder(updatedInfo); // Update the existing record
 
+            return RedirectToAction("Admin_Orders");
+        }
+
+        //DELETE ORDER
+        [HttpGet]
+        public IActionResult Admin_Delete_Order(int id)
+        {
+            var recordToDelete = _repo.Orders
+                .SingleOrDefault(x => x.TransactionId == id);
+
+            if (recordToDelete == null)
+            {
+                return NotFound(); // or handle the case where the product is not found
+            }
+
+            return View(recordToDelete); // Pass the Product directly to the view
+        }
+
+
+        [HttpPost]
+        public IActionResult Admin_Delete_Order(Order order)
+        {
+            _repo.AdminDeleteOrder(order);
             return RedirectToAction("Admin_Orders");
         }
 

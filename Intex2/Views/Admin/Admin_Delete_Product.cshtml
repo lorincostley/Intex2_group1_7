@@ -1,10 +1,28 @@
 ﻿@model Product
 
-<h2>Confirm Deletion</h2>
+<style>
+    .btn-delete {
+        display: block;
+        background-color: #5b64d1;
+        color: white;
+        font-weight: bold;
+        padding: 8px 16px; /* Adjust padding for smaller buttons */
+        font-size: 14px; /* Adjust font size for smaller buttons */
+        border: none;
+        border-radius: 20px; /* Make buttons pill-shaped */
+        margin: 0 auto; /* Center the buttons horizontally */
+        margin-top: 10px; /* Add margin on top for spacing */
+        width: 120px; /* Set a fixed width for both buttons */
+    }
+</style>
 
-<h3>@Model.Name</h3>
-<form method="post">
-    <input type="hidden" asp-for="ProductId" />
-    <button type="submit">Delete</button>
-    <a class="btn-info" asp-controller="Admin" asp-action="Admin_Products">Cancel</a>
-</form>
+<br />
+<div>
+    <h2 style="text-align:center">Confirm Deletion</h2>
+    <h3 style="text-align:center">@Model.Name</h3>
+    <form method="post" style="text-align:center">
+        <input type="hidden" asp-for="ProductId" />
+        <button type="submit" class="btn btn-delete">Delete</button>
+        <a class="btn-delete" style="background-color:dimgrey !important" asp-controller="Admin" asp-action="Admin_Products">Cancel</a>
+    </form>
+</div>
