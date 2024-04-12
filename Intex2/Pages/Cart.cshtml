@@ -44,7 +44,7 @@
                             <br />
                             Pieces: @l.Product.NumParts
                             <br />
-                                <form asp-page-handler="Remove" method="post" style="display: inline;">
+                                <form asp-page-handler="Remove" method="post" style="display: inline;"> 
                                     <input type="hidden" name="ProductId" value="@l.Product.ProductId" />
                                     <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
                                     <label for="removeProduct" style="cursor: pointer;">

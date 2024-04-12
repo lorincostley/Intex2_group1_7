@@ -1,7 +1,58 @@
-﻿@{
-    ViewData["Title"] = "Product List";
-}
+﻿
 @model ProductRecommendViewModel
+<style>
+
+    .banner {
+        position: relative;
+        text-align: left; /* Align text to the left */
+        color: black; /* Set text color */
+    }
+
+    .banner img {
+        width: 100%; /* Stretch the image to 120% width */
+        max-width: none; /* Remove any maximum width restriction */
+        height: auto; /* Maintain the aspect ratio */
+        overflow: hidden; /* Hide any overflow beyond the container */
+    }
+
+    .banner-content {
+        position: absolute;
+        top: 50%;
+        left: 20%; /* Adjust left positioning based on image layout */
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+        padding: 20px; /* Add padding for better readability */
+        text-align:center;
+        width:50%;
+    }
+
+    .banner h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        color: #5b64d1; /* Set text color for headings */
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .banner p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+
+</style>
+<body style="container-index">
+    <br />
+    <div class="banner">
+        <img src="~/legobanner.jpg" alt="Banner Image">
+        <div class="banner-content">
+            <h1>Aurora Bricks</h1>
+            <h3>Welcome to Aurora Bricks, where creativity meets bricks!</h3>
+            <p>Step into the world of Lego™ enthusiasts and master builders. 
+                Explore a treasure trove of unique Lego sets, from rare collectibles to the latest releases. 
+                Whether you're a seasoned collector or just starting your Lego journey, 
+                Aurora Bricks is your gateway to endless building possibilities and community connections.</p>
+        </div>
+    </div>
 <div class="container">
     <div class="row">
 
@@ -9,9 +60,10 @@
         <div class="col-lg-11">
             <section class="py-5">
                 <div class="container px-4 px-lg-5 mt-5">
-                    <h3>All Products</h3>
-                    <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
-                        @foreach (Product p in Model.Products ?? Enumerable.Empty<Product>())
+                    <h3>Products for You</h3>
+                        <div class="row gx-3 gx-lg-4 row-cols-1 row-cols-md-2 row-cols-xl-5 justify-content-center" style="text-align:center">
+                            @* row-cols-1 row-cols-md-2 row-cols-xl-4 *@
+                            @foreach (Product p in Model.Products ?? Enumerable.Empty<Product>())
                         {
                             <div class="col mb-5">
                                 <a href="@Url.Action("ProductDetails", "Home", new { ProductId = p.ProductId, Name = p.Name, ImgLink = p.ImgLink, Price = p.Price, Description = p.Description})" class="card-link">
@@ -21,7 +73,7 @@
                                 </a>
                             </div>
                         }
-                        }
+                        
 
                     </div>
                 </div>
@@ -31,38 +83,4 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</body>

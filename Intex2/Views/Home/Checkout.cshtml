@@ -90,5 +90,9 @@
         <br />
 
         <button type="submit" class="rounded-pill">Submit</button>
+        <form asp-controller="Home" asp-action="ClearCart" method="post">
+            <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
+            <button type="submit" class="rounded-pill">Clear Cart</button>
+        </form>
     </form>
 </div>

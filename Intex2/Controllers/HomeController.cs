@@ -9,6 +9,7 @@ using Humanizer;
 using Microsoft.AspNetCore.Http;
 using System.Drawing.Printing;
 using System.Drawing;
+using Intex2.Infrastructure;
 
 namespace Intex2.Controllers 
 {
@@ -405,6 +406,19 @@ namespace Intex2.Controllers
             // Use totalPrice as needed
             ViewBag.TotalPrice = totalPrice;
             return View();
+        }
+        public IActionResult ClearCart(string returnUrl)
+        {
+            // Get the cart from session
+            var cart = HttpContext.Session.GetJson<Cart>("Cart") ?? new Cart();
+
+            // Clear the cart
+            cart.Clear();
+
+            // Update the cart in session
+            HttpContext.Session.SetJson("Cart", cart);
+
+            return RedirectToAction("Index", new { returnUrl = returnUrl });
         }
     }
 }
