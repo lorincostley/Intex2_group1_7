@@ -34,7 +34,7 @@ namespace Intex2.Controllers
 
             var records = _repo.Orders
                 .OrderByDescending(o => o.Date)
-                .Take(150)
+                .Take(1000)
                 .ToList();
             var predictions = new List<OrderPredictionViewModel>(); 
 
@@ -113,8 +113,7 @@ namespace Intex2.Controllers
         [HttpGet]
         public IActionResult Admin_Edit_Order(int id)
         {
-            var recordToEdit = _repo.Orders
-                .SingleOrDefault(x => x.TransactionId == id);
+            var recordToEdit = _repo.AdminEditOrder(id);
 
             return View(recordToEdit); // Pass the Product directly to the view
         }
@@ -231,6 +230,8 @@ namespace Intex2.Controllers
             var newProduct = new Product();
             return View(newProduct);
         }
+
+        //ADD PRODUCT
 
         // POST: Handle the form submission for adding a new product
         [HttpPost]

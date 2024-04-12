@@ -1,4 +1,97 @@
-﻿@model Product
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Details</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 20px;
+        }
+
+        .product-info {
+            display: flex;
+            margin-top: 20px;
+        }
+
+            .product-info img {
+                width: 450px; /* Set a fixed width for the image */
+                height: 450px; /* Maintain aspect ratio */
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+
+        .back-to-home a {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-top: 20px;
+            color: dimgray;
+            text-decoration: none;
+            border: 2px solid dimgray;
+            border-radius: 5px;
+        }
+
+        .red-bar {
+            background-color: #E74F65;
+            height: 5px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-info">
+            <img src="@ViewBag.Product.ImgLink" alt="Product Image" />
+            <div class="product-details">
+                <h2>@ViewBag.Product.Name</h2>
+                <br />
+                <p>Price: $@ViewBag.Product.Price</p>
+                <p>Description: @ViewBag.Product.Description</p>
+                <p class="back-to-home"><a href="@Url.Action("Index", "Home")">Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h3>Recommended Products</h3>
+            @if (ViewBag.Recommendations != null)
+            {
+                <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
+                    @foreach (var recommendation in ViewBag.Recommendations)
+                    {
+                        <div class="col mb-5">
+                            <div class="card h-100 border-0">
+                                <img src="@recommendation.ImgLink" class="card-img-top" alt="@recommendation.Name">
+                                <div class="card-body">
+                                    <h5 class="card-title">@recommendation.Name</h5>
+                                    <p>Price: $@recommendation.Price</p>
+                                    <p>Description: @recommendation.Description</p>
+                                    <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@recommendation.ProductId" asp-route-Name="@ViewBag.Name" asp-route-ImgLink="@ViewBag.ImgLink" asp-route-Price="@ViewBag.Price" asp-route-Description="@ViewBag.Description" class="card-link">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+</body>
+</html>
+
+
+
+
+
+
+@* @model Intex2.Models.ViewModels.ItemRecommendationViewModel
+
 
 <!DOCTYPE html>
 <html>
@@ -50,12 +143,12 @@
 <body>
     <div class="container">
         <div class="product-info">
-            <img src="@Model.ImgLink" alt="Product Image" />
+            <img src="@Model.Products.ImgLink" alt="Product Image" />
             <div class="product-details">
-                <h2>@Model.Name</h2>
+                <h2>@Model.Products.Name</h2>
                 <br />
-                <p>Price: $@Model.Price</p>
-                <p>Description: @Model.Description</p>
+                <p>Price: $@Model.Products.Price</p>
+                <p>Description: @Model.Products.Description</p>
                 <p class="back-to-home"><a href="@Url.Action("ProductList", "Home")">Back to Home</a></p>
             </div>
         </div>
@@ -64,16 +157,25 @@
         <div class="container px-4 px-lg-5 mt-5">
             <h3>Recommended Products</h3>
             <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
-@*                 @foreach (var ib in Model.IBRecommendations)
+                @foreach (var recommendationId in Model.Recommendation)
                 {
-                    <div class="col mb-5">
-                        <div class="card h-100 border-0">
-                            <partial name="IBRecommendation" model="ib" />
+                    var recommendedProduct = Model.Products.FirstOrDefault(p => p.ProductId == recommendationId);
+                    if (recommendedProduct != null)
+                    {
+                        <div class="col mb-5">
+                            <div class="card h-100 border-0">
+                                <img src="@recommendedProduct.ImgLink" class="card-img-top" alt="Product Image" />
+                                <div class="card-body">
+                                    <h5 class="card-title">@recommendedProduct.Name</h5>
+                                    <p class="card-text">Price: $@recommendedProduct.Price</p>
+                                    <!-- Add more details if needed -->
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                } *@
+                    }
+                }
             </div>
         </div>
     </section>
 </body>
-</html>
+</html> *@
