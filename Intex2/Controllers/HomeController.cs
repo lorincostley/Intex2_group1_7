@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using System.Drawing.Printing;
 using System.Drawing;
 using Microsoft.AspNetCore.Identity;
+using Intex2.Infrastructure;
 
 namespace Intex2.Controllers 
 {
