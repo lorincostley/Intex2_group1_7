@@ -1,10 +1,10 @@
-﻿@model AdminViewModel
+﻿@model Customer
 
 <h2>Confirm Deletion</h2>
 
-<h3>@Model.Customers.First().FirstName @Model.Customers.First().LastName </h3>
+<h3>@Model.FirstName @Model.LastName</h3>
 <form method="post">
-    <input type="hidden" asp-for="Customers.First().CustomerId" />
+    <input type="hidden" asp-for="CustomerId" />
     <button type="submit">Delete</button>
-    <a class="btn-info" asp-controller="Admin" asp-action="Admin_Users">Cancel</a>
-</form> 
+    <a class="btn-info" asp-controller="Admin" asp-action="Admin_Products">Cancel</a>
+</form>

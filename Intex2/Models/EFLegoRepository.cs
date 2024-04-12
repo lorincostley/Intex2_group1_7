@@ -1,4 +1,6 @@
-﻿namespace Intex2.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Intex2.Models
 {
     public class EFLegoRepository : ILegoRepository
     {
@@ -23,6 +25,16 @@
             _context.SaveChanges();
         }
 
+        public void AddProduct(Product product)
+        {
+            /*            _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Products ON");
+            */
+            _context.Add(product);
+            _context.SaveChanges();
+            /*            _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Products OFF");
+            */
+        }
+
         public void AdminUpdateCustomer(Customer customer)
         {
             _context.Update(customer);
@@ -33,12 +45,35 @@
             _context.Remove(customer);
             _context.SaveChanges();
         }
+        public void AddCustomer(Customer customer)
+        {
+            _context.Add(customer);
+            _context.SaveChanges();
+        }
         public void AddOrder(Order order)
         {
             _context.Add(order);
             _context.SaveChanges();
         }
 
+        public void UpdateOrder(Order order)
+        {
+            _context.Update(order);
+            _context.SaveChanges();
+        }
+
+        public void AdminUpdateOrder(Order order)
+        {
+            _context.Update(order);
+            _context.SaveChanges();
+
+        }
+
+        public void AdminDeleteOrder(Order order)
+        {
+            _context.Remove(order);
+            _context.SaveChanges();
+        }
     }
 }
 
