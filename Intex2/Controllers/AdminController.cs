@@ -236,6 +236,11 @@ namespace Intex2.Controllers
         [HttpPost]
         public IActionResult Admin_Add_Product(Product newProduct)
         {
+            int id = _repo.Products.Max(order => order.ProductId);
+
+            id++;
+
+            newProduct.ProductId = id;
             //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Products ON");
             if (ModelState.IsValid)
             {
@@ -333,6 +338,12 @@ namespace Intex2.Controllers
         [HttpPost]
         public IActionResult Admin_Add_User(Customer newCustomer)
         {
+            short id = _repo.Customers.Max(order => order.CustomerId);
+
+            id++;
+
+            newCustomer.CustomerId = id;
+
             if (ModelState.IsValid)
             {
                 _repo.AddCustomer(newCustomer); // Add the new product to the repository
