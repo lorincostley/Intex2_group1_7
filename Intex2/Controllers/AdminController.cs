@@ -24,7 +24,7 @@ namespace Intex2.Controllers
             _repo = temp;
             _context = context;
 
-            _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "gradient_model.onnx");
+            _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "wwwroot\\wwwroot\\gradient_model.onnx");
             _session = new InferenceSession(_onnxModelPath);
 
         }
