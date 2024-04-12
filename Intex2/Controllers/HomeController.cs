@@ -51,16 +51,15 @@ namespace Intex2.Controllers
 
         //    return View(product);
         //}
-
         public IActionResult ProductDetails(int id)
         {
-            Product product = _repo.Products
+            var product = _repo.Products
               .FirstOrDefault(x => x.ProductId == id);
 
             ViewBag.Product = product;
 
-            Recommendation rec = _repo.Recommendations
-              .Where(x => x.recommendation_ID == id).First();
+            var rec = _repo.Recommendations
+              .Where(x => x.primary_product_ID == id).FirstOrDefault();
 
             int[] recommendationIds =  new[]
             {

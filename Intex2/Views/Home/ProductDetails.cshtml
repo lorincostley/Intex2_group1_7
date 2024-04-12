@@ -48,12 +48,12 @@
 <body>
     <div class="container">
         <div class="product-info">
-            <img src="@ViewBag.Product.img_link" alt="Product Image" />
+            <img src="@ViewBag.Product.ImgLink" alt="Product Image" />
             <div class="product-details">
-                <h2>@ViewBag.Product.name</h2>
+                <h2>@ViewBag.Product.Name</h2>
                 <br />
-                <p>Price: $@ViewBag.Product.price</p>
-                <p>Description: @ViewBag.Product.description</p>
+                <p>Price: $@ViewBag.Product.Price</p>
+                <p>Description: @ViewBag.Product.Description</p>
                 <p class="back-to-home"><a href="@Url.Action("Index", "Home")">Back to Home</a></p>
             </div>
         </div>
@@ -68,12 +68,12 @@
                     {
                         <div class="col mb-5">
                             <div class="card h-100 border-0">
-                                <img src="@recommendation.img_link" class="card-img-top" alt="@recommendation.name">
+                                <img src="@recommendation.ImgLink" class="card-img-top" alt="@recommendation.Name">
                                 <div class="card-body">
-                                    <h5 class="card-title">@recommendation.name</h5>
-                                    <p>Price: $@recommendation.price</p>
-                                    <p>Description: @recommendation.description</p>
-                                    <a href="@Url.Action("Product_Detail", "Home", new { id = recommendation.product_Id })" class="btn btn-primary">View Details</a>
+                                    <h5 class="card-title">@recommendation.Name</h5>
+                                    <p>Price: $@recommendation.Price</p>
+                                    <p>Description: @recommendation.Description</p>
+                                    <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@recommendation.ProductId" asp-route-Name="@ViewBag.Name" asp-route-ImgLink="@ViewBag.ImgLink" asp-route-Price="@ViewBag.Price" asp-route-Description="@ViewBag.Description" class="card-link">View Details</a>
                                 </div>
                             </div>
                         </div>
