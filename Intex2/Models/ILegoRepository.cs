@@ -16,5 +16,6 @@
         public void AddProduct(Product newProduct);
         public void AddCustomer(Customer customer);
         void AdminUpdateOrder(Order updatedInfo);
+        public IQueryable<Recommendation> Recommendations { get; }
     }
 }
