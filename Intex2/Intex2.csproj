@@ -42,4 +42,8 @@
     <Folder Include="wwwroot\lib\qrcode\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\wwwroot\gradient_model.onnx" />
+  </ItemGroup>
+
 </Project>

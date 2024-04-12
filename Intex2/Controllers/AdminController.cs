@@ -12,7 +12,7 @@ using System.Reflection.Metadata;
 
 namespace Intex2.Controllers
 {
-    //[Authorize(Policy = "RequireAdministratorRole")]
+    [Authorize(Policy = "RequireAdminRole")]
     public class AdminController : Controller
     {
         private ILegoRepository _repo;
@@ -24,7 +24,7 @@ namespace Intex2.Controllers
             _repo = temp;
             _context = context;
 
-            _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "gradient_model.onnx");
+            _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "wwwroot\\wwwroot\\gradient_model.onnx");
             _session = new InferenceSession(_onnxModelPath);
 
         }

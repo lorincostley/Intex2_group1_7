@@ -9,7 +9,7 @@ using Humanizer;
 using Microsoft.AspNetCore.Http;
 using System.Drawing.Printing;
 using System.Drawing;
-using Intex2.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 
 namespace Intex2.Controllers 
 {
@@ -19,14 +19,17 @@ namespace Intex2.Controllers
         private ILegoRepository _repo;
         private readonly InferenceSession _session;
         private readonly string _onnxModelPath;
+        private readonly Cart _cart;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILegoRepository temp, IHostEnvironment hostEnvironment)
+        public HomeController(ILegoRepository temp, IHostEnvironment hostEnvironment, Cart cart, UserManager<IdentityUser> userManager)
         {
             _repo = temp;
 
-            _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "gradient_model.onnx");
+            _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "wwwroot\\wwwroot\\gradient_model.onnx");
             _session = new InferenceSession(_onnxModelPath);
-
+            _cart = cart;
+            _userManager = userManager;
         } 
 
         [Authorize]
@@ -224,24 +227,25 @@ namespace Intex2.Controllers
 
             // Save the order object to the database
             _repo.AddOrder(OrderModel.Orders);
-
+            _cart.Clear();
             return View(view);
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            //if(User = 4)
-            //{
-            //    var blah = new ProductRecommendViewModel
-            //    {
-            //        Products = _repo.Products
-            //                   .Where(x => _repo.user_Recommendations.Select(tr => tr.product_ID).Contains(x.ProductId))
-            //    };
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user != null && user.Email == "legomasterBETH@example.com")
+            {
+                var blah = new ProductRecommendViewModel
+                {
+                    Products = _repo.Products
+                               .Where(x => _repo.user_Recommendations.Select(tr => tr.product_ID).Contains(x.ProductId))
+                };
 
-            //    return View(blah);
-            //}
-            //else
-            //{
+                return View(blah);
+            }
+            else
+            {
                 var blah = new ProductRecommendViewModel
                 {
                     Products = _repo.Products
@@ -249,7 +253,7 @@ namespace Intex2.Controllers
                 };
 
                 return View(blah);
-            //}
+            }
         }
 
         public IActionResult Privacy()
@@ -401,6 +405,7 @@ namespace Intex2.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [Authorize]
         public IActionResult Checkout(decimal? totalPrice)
         {
             // Use totalPrice as needed

@@ -120,24 +120,6 @@ internal class Program
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-        // Add role-based policy
-        builder.Services.AddAuthorization(options =>
-        {
-            options.AddPolicy("RequireAdministratorRole",
-                 policy => policy.RequireRole("Administrator"));
-        });
-
-        builder.Services.AddRazorPages();
-
-        builder.Services.Configure<CookiePolicyOptions>(options =>
-        {
-            // This lambda determines whether user consent for non-essential 
-            // cookies is needed for a given request.
-            options.CheckConsentNeeded = context => true;
-            options.MinimumSameSitePolicy = SameSiteMode.None;
-            options.ConsentCookieValue = "true";
-        });
-
         builder.Services.Configure<IdentityOptions>(options =>
         {
             // Password settings.
@@ -157,6 +139,22 @@ internal class Program
             options.User.AllowedUserNameCharacters =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
             options.User.RequireUniqueEmail = false;
+        });
+
+        builder.Services.Configure<CookiePolicyOptions>(options =>
+        {
+            // This lambda determines whether user consent for non-essential 
+            // cookies is needed for a given request.
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.None;
+            options.ConsentCookieValue = "true";
+        });
+
+        // Add role-based policy
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("RequireAdminRole",
+                 policy => policy.RequireRole("Admin"));
         });
 
         builder.Services.AddHsts(options =>
@@ -196,10 +194,10 @@ internal class Program
         {
             ctx.Response.Headers.Append("Content-Security-Policy",
             "default-src 'self';" +
-            "script-src 'self' https://stackpath.bootstrapcdn.com/ 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=';" +
+            "script-src 'self' https://stackpath.bootstrapcdn.com/ 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=' 'unsafe-inline' 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=' 'nonce-ranDom';" +
             "img-src data: https:;" +
             "style-src https://stackpath.bootstrapcdn.com/ 'self' 'unsafe-inline';" +
-            "connect-src 'self' wss: http://localhost:52827 ws://localhost:52827");
+            "connect-src 'self' wss: localhost:" );
             await next();
         });
 
@@ -235,22 +233,6 @@ internal class Program
                     IdentityRole roleRole = new IdentityRole(role);
                     await roleManager.CreateAsync(roleRole);
                 }
-            }
-        }
-
-        using (var scope = app.Services.CreateScope())
-        {
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            string email = "admin@admin.com";
-            string password = "Pa$$word123!";
-            if (await userManager.FindByNameAsync(email) == null)
-            {
-                var user = new IdentityUser();
-                user.UserName = "Admin";
-                user.Email = email;
-                user.UserName = email;
-                await userManager.CreateAsync(user, password);
-                await userManager.AddToRoleAsync(user, "Admin");
             }
         }
 
