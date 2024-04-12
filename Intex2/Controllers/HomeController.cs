@@ -7,6 +7,8 @@ using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using Humanizer;
 using Microsoft.AspNetCore.Http;
+using System.Drawing.Printing;
+using System.Drawing;
 
 namespace Intex2.Controllers 
 {
@@ -196,7 +198,26 @@ namespace Intex2.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            //if(User = 4)
+            //{
+            //    var blah = new ProductRecommendViewModel
+            //    {
+            //        Products = _repo.Products
+            //                   .Where(x => _repo.user_Recommendations.Select(tr => tr.product_ID).Contains(x.ProductId))
+            //    };
+
+            //    return View(blah);
+            //}
+            //else
+            //{
+                var blah = new ProductRecommendViewModel
+                {
+                    Products = _repo.Products
+                               .Where(x => _repo.top_Ratings.Select(tr => tr.product_ID).Contains(x.ProductId))
+                };
+
+                return View(blah);
+            //}
         }
 
         public IActionResult Privacy()

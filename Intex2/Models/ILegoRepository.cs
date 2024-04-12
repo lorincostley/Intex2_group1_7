@@ -5,6 +5,8 @@
         public IQueryable<Product> Products { get; }
         public IQueryable<Order> Orders { get; }
         public IQueryable<Customer> Customers { get; }
+        public IQueryable<Top_Rating> top_Ratings { get; }
+        public IQueryable<User_Recommendation> user_Recommendations { get; }
         public void AdminDeleteProduct(Product product);
         public void AdminUpdateProduct(Product product);
         public void AdminUpdateCustomer(Customer customer);
