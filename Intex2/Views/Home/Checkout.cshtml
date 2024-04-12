@@ -22,7 +22,7 @@
         </div>
         <br />
         <div>
-            <select id="bank" class="pill-input align-left" placeholder="Bank">
+            <select id="bank" class="pill-input align-left" placeholder="Bank" asp-for="Orders.Bank">
                 <option value="" selected disabled>Bank</option>
                 <option value="RBS">RBS</option>
                 <option value="Lloyds">Lloyds</option>
@@ -34,18 +34,25 @@
             </select>
         </div>
         <div>
-            <select id="type" class="pill-input align-left">
+            <select id="type" class="pill-input align-left" asp-for="Orders.TypeOfTransaction">
                 <option value="Online">Online</option>
             </select>
         </div>
         <div>
-            <select id="mode" class="pill-input-gender align-left">
+            <select id="mode" class="pill-input-gender align-left" asp-for="Orders.EntryMode">
                 <option value="CVV">CVV</option>
             </select>
         </div>
-        <input asp-for="Orders.Amount" type="hidden" />
+
+        <div>Total Price: @ViewBag.TotalPrice.ToString("c")</div>
+
+
+
+        <input asp-for="Orders.Amount" type="hidden" value="@ViewBag.TotalPrice" />
+        
+ 
         <input asp-for="Customer.CountryOfResidence" type="hidden" />
-        <input asp-for="Customer.CountryOfResidence" type="hidden" />
+
 
         <br />
         

@@ -12,6 +12,7 @@ namespace Intex2.Infrastructure
     public class PaginationTagHelper : TagHelper
     {
         private IUrlHelperFactory urlHelperFactory;
+
         public PaginationTagHelper(IUrlHelperFactory temp)
         {
             urlHelperFactory = temp;
@@ -19,10 +20,13 @@ namespace Intex2.Infrastructure
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext? ViewContext { get; set; }
+
         public string? PageAction { get; set; }
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
         public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
+
         public PaginationInfo PageModel { get; set; }
+
         public bool PageClassEnabled { get; set; } = false;
         public string PageClass { get; set; } = string.Empty;
         public string PageClassNormal { get; set; } = string.Empty;
@@ -40,6 +44,7 @@ namespace Intex2.Infrastructure
                 {
                     TagBuilder tag = new TagBuilder("a");
                     PageUrlValues["pageNum"] = i;
+                    PageUrlValues["pageSize"] = PageModel.ItemsPerPage;
                     tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                     if (PageClassEnabled)
                     {

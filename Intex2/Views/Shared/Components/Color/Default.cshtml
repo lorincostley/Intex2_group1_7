@@ -1,0 +1,10 @@
+﻿@model IQueryable<string>
+<div class="d-grid gap-2">
+    <br />
+    <p>Color</p>
+    @foreach (string cl in Model ?? Enumerable.Empty<string>())
+    {
+        <a class="btn btn-sm @(cl == ViewBag.SelectedPrimaryColor ? "btn-primary" : "btn-outline-secondary")"
+           asp-controller="Home" asp-action="ProductList" asp-route-color="@cl" asp-route-pageNum="1">@cl</a>
+    }
+</div>

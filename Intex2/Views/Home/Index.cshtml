@@ -2,9 +2,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-@{
-    ViewData["Title"] = "Product List";
-}
 
 @model ProductListViewModel
 
@@ -16,41 +13,89 @@
                 <div class="container px-4 px-lg-5 mt-5">
                     <h3>Top Rated Products</h3>
                     <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center">
-                        <!-- Display top-rated products here -->
-                       @*  @foreach (Product p in Model.TopRatedProducts.Take(3))
-                        {
-                            <div class="col mb-5">
-                                <a href="@Url.Action("ProductDetails", "Home", new { ProductId = p.ProductId })" class="card-link">
-                                    <div class="card h-100 border-0">
-                                        <partial name="ProductSummary" model="p" />
-                                    </div>
-                                </a>
+                        <!-- First Product Card -->
+                        <div class="col mb-5">
+                            <div class="card h-100 shadow" style="height: 100px; display: flex; flex-direction: column; justify-content: space-between; border: none;">
+                                <!-- Product Image -->
+                                <img class="card-img-top" src="https://www.lego.com/cdn/cs/set/assets/bltde655e8359417b7d/43217.png?format=webply&fit=bounds&quality=75&width=800&height=800&dpr=1" style="max-width: 100%; height: auto;" />
+                                <!-- Product Details -->
+                                <div class="card-body">
+                                    <h2 class="card-title">"Up" House</h2>
+                                    <ul class="list-unstyled">
+                                        <li>Category: Minifig</li>
+                                        <li>Pieces: 598</li>
+                                        <li>Year: 2023</li>
+                                    </ul>
+                                    <p class="card-text"><b>$60</b></p>
+                                </div>
+                                <!-- Add to Cart Button -->
+                                <div class="card-footer">
+                                    <form id="productIdForm1" method="post" asp-page="/Cart">
+                                        <input type="hidden" name="ProductId" value="34" />
+                                        <button type="submit" class="btn btn-outline-success btn-small float-end">Add to Cart</button>
+                                    </form>
+                                </div>
                             </div>
-                        } *@
+                        </div>
+                        <div class="col mb-5">
+                            <div class="col mb-5">
+                                <div class="card h-100 shadow" style="height: 100px; display: flex; flex-direction: column; justify-content: space-between; border: none;">
+                                    <img class="card-img-top" src="https://www.lego.com/cdn/cs/set/assets/bltfa6c9196a514bb03/31157.png?format=webply&fit=bounds&quality=75&width=800&height=800&dpr=1" style="max-width: 100%; height: auto;" />
+                                    <div class="card-body">
+                                        <h2 class="card-title">
+                                            Exotic Peacock
+                                        </h2>
+                                        <ul class="list-unstyled">
+                                            <li>Category: Colorful</li>
+                                            <li>Pieces: 355</li>
+                                            <li>Year: 2024</li>
+                                        </ul>
+                                        <p class="card-text"><b>$20</b></p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <form id="productIdForm" method="post" asp-page="/Cart">
+                                            <input type="hidden" name="ProductId" value="27" />
+                                            <button type="submit" class="btn btn-outline-success btn-small float-end">Add to Cart</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-5">
+                            <div class="card h-100 shadow" style="height: 100px; display: flex; flex-direction: column; justify-content: space-between; border: none;">
+                                <img class="card-img-top" src="https://www.lego.com/cdn/cs/set/assets/blt2ab62c2c368f72f6/31152.png?format=webply&fit=bounds&quality=75&width=800&height=800&dpr=1" style="max-width: 100%; height: auto;" />
+                                <div class="card-body">
+                                    <h2 class="card-title">Space Astronaut</h2>
+                                    <ul class="list-unstyled">
+                                        <li>Category: Character</li>
+                                        <li>Pieces: 647</li>
+                                        <li>Year: 2024</li>
+                                    </ul>
+                                    <p class="card-text"><b>$55</b></p>
+                                </div>
+                                <div class="card-footer">
+                                    <form id="productIdForm" method="post" asp-page="/Cart">
+                                        <input type="hidden" name="ProductId" value="33" />
+                                        <button type="submit" class="btn btn-outline-success btn-small float-end">Add to Cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
     </div>
 
+    <!-- Recommended Products Section -->
     <div class="row">
-        <!-- Recommended Products Section -->
         <div class="col-lg-12">
             <section class="py-5">
                 <div class="container px-4 px-lg-5 mt-5">
                     <h3>Recommended Products For You</h3>
                     <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center">
                         <!-- Display recommended products here -->
-                        @* @foreach (Product p in Model.RecommendedProducts.Take(3))
-                        {
-                            <div class="col mb-5">
-                                <a href="@Url.Action("ProductDetails", "Home", new { ProductId = p.ProductId })" class="card-link">
-                                    <div class="card h-100 border-0">
-                                        <partial name="ProductSummary" model="p" />
-                                    </div>
-                                </a>
-                            </div>
-                        } *@
+                        <!-- Add recommended products here -->
                     </div>
                 </div>
             </section>
