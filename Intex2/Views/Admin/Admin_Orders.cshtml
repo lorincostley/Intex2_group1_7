@@ -2,19 +2,31 @@
 
 <style>
     .container-admin-orders {
-        width: 90%; /* Adjust the width as needed */
-        margin: 0 auto; /* Center the container horizontally */
-        padding: 0 20px; /* Add padding on the sides */
-        box-sizing: border-box; /* Include padding in the width calculation */
+        width: 90%;
+        margin: 0 auto;
+        padding: 0 20px;
+        box-sizing: border-box;
     }
+
+    .table-container {
+         display: flex;
+         justify-content: space-between;
+    }
+
+/*         .table-container .table {
+            width: 48%;
+        } */
 </style>
 
- @{
+@{
     var classTypeDict = new Dictionary<int, string>
     {
         { 0, "Not Fraud" },
         { 1, "Fraud" }
     };
+
+    var fraudulentOrders = Model.Where(x => x.Orders.Fraud == 1);
+    var nonFraudulentOrders = Model.Where(x => x.Orders.Fraud == 0);
 }
 
 <br />
@@ -24,120 +36,73 @@
     </div>
     <div class="col-4" style="text-align:center">
         <a asp-area="" asp-controller="Home" asp-action="Admin_Users" style="text-align:center; color:black; font-size:large;">Users</a>
-    </div> 
+    </div>
     <div class="col-4" style="text-align:center">
         <a asp-area="" asp-controller="Home" asp-action="Admin_Orders" style="text-align:center; color:black; font-size:larger; font-weight:bold">Orders</a>
     </div>
 </div>
-<br /><br />
-<h3 style="text-align:center">Potentially Fraudulent Orders</h3>
-<div>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <td>Transaction ID</td>
-                <td>Customer ID</td>
-                <td>Date</td>
-                <td>Day of Week</td>
-                <td>Time</td>
-                <td>Entry Mode</td>
-                <td>Amount</td>
-                <td>Transaction Type</td>
-                <td>Country</td>
-                <td>Shipping Address</td>
-                <td>Bank</td>
-                <td>Type of Card</td>
-                <td>Fraud 1/0</td>
-                <td>Fraud text</td>
-                <td>Edit</td>
-                <td>Delete</td>
-            </tr>
+<br />
+<br />
 
-        </thead>
-
-
-        <tbody>
-            @foreach (var x in Model)
-            {
-                <tr>
-                    <td>@x.Orders.TransactionId</td>
-                    <td>@x.Orders.CustomerId</td>
-                    <td>@x.Orders.Date</td>
-                    <td>@x.Orders.DayOfWeek</td>
-                    <td>@x.Orders.Time</td>
-                    <td>@x.Orders.EntryMode</td>
-                    <td>@x.Orders.Amount</td>
-                    <td>@x.Orders.TypeOfTransaction</td>
-                    <td>@x.Orders.CountryOfTransaction</td>
-                    <td>@x.Orders.ShippingAddress</td>
-                    <td>@x.Orders.Bank</td>
-                    <td>@x.Orders.TypeOfCard</td>
-                    <td>@x.Orders.Fraud</td>
-                    <td>@x.Prediction</td>
-
-                   <td>
-                        <a asp-controller="Admin" asp-action="Admin_Edit_Order" asp-route-id="@x.Orders.TransactionId">
-                            <img src="~/pencil.jpg" alt="Edit" style="height:25px" />
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-controller="Admin" asp-action="Admin_Delete_Order" asp-route-id="@x.Orders.TransactionId">
-                            <img src="~/blacktrashcan.jpg" alt="Delete" style="height:25px" />
-                        </a>
-                    </td>
-                
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <br /><br />
-   @*  <h3 style="text-align:center">Processed Orders</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <td>Transaction ID</td>
-                <td>Customer ID</td>
-                <td>Date</td>
-                <td>Day of Week</td>
-                <td>Time</td>
-                <td>Entry Mode</td>
-                <td>Amount</td>
-                <td>Transaction Type</td>
-                <td>Country</td>
-                <td>Shipping Address</td>
-                <td>Bank</td>
-                <td>Type of Card</td>
-                <td>Edit</td>
-                <td>Delete</td>
-            </tr>
-
-        </thead>
- *@
-@*         @foreach (var x in Model)
-        {
-            <tbody>
-                <tr>
-                    CHANGE THESE TO CORRECT VARs
-                    <td>@x.transaction_ID</td>
-                    <td>@x.customer_ID</td>
-                    <td>@x.Date</td>
-                    <td>@x.day_of_week</td>
-                    <td>@x.time</td>
-                    <td>@x.entry_mode</td>
-                    <td>@x.amount</td>
-                    <td>@x.type_of_transaction</td>
-                    <td>@x.country_of_transaction</td>
-                    <td>@x.shipping_ddress</td>
-                    <td>@x.bank</td>
-                    <td>@x.type_of_card</td>
-
-                    ADD ICONS
-                    <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.transaction_ID">Edit</a></td>
-                    <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.transaction_ID">Delete</a></td> @DD A DELETE CONFIRMATION PAGE/WINDOW
-                </tr>
-            </tbody>
-        } *@
-@* 
-    </table> *@
+<div class="row table-container">
+    <div class="col-6">
+        <h3 style="text-align:center">Potentially Fraudulent Orders</h3>
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr style="font-weight:600; text-align:center">
+                        <td>Day of Week</td>
+                        <td>Time</td>
+                        <td>Amount</td>
+                        <td>Country</td>
+                        <td>Bank</td>
+                        <td>Type of Card</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in fraudulentOrders)
+                    {
+                        <tr>
+                            <td>@x.Orders.DayOfWeek</td>
+                            <td>@x.Orders.Time</td>
+                            <td>@x.Orders.Amount</td>
+                            <td>@x.Orders.CountryOfTransaction</td>
+                            <td>@x.Orders.Bank</td>
+                            <td>@x.Orders.TypeOfCard</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6">
+        <h3 style="text-align:center">Non-Fraudulent Orders</h3>
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr style="font-weight:600; text-align:center">
+                        <td>Day of Week</td>
+                        <td>Time</td>
+                        <td>Amount</td>
+                        <td>Country</td>
+                        <td>Bank</td>
+                        <td>Type of Card</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in nonFraudulentOrders)
+                    {
+                        <tr>
+                            <td>@x.Orders.DayOfWeek</td>
+                            <td>@x.Orders.Time</td>
+                            <td>@x.Orders.Amount</td>
+                            <td>@x.Orders.CountryOfTransaction</td>
+                            <td>@x.Orders.Bank</td>
+                            <td>@x.Orders.TypeOfCard</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

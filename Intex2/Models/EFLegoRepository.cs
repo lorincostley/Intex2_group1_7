@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Intex2.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Intex2.Models
 {
@@ -79,6 +80,14 @@ namespace Intex2.Models
         {
             _context.Orders.Remove(order);
             _context.SaveChanges();
+        }
+
+        public Order AdminEditOrder(int id)
+        {
+            var recordToDelete = _context.Orders
+                .FirstOrDefault(x => x.TransactionId == id);
+
+            return recordToDelete;
         }
     }
 }

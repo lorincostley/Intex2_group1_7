@@ -3,7 +3,12 @@
  *@
  
 @model AdminViewModel
- 
+
+<style>
+    .align-text-right {
+        text-align: right;
+    }
+</style>
  <br /> 
 <div class="row">
     <div class="col-4" style="text-align:center">
@@ -21,13 +26,13 @@
 <br />
 <div class="align-text-right">
     <a asp-controller="Admin" asp-action="Admin_Add_User">
-        <img src="~/Plus.jpg" alt="Add" style="height:25px" />
+        Add Customer <img src="~/Plus.jpg" alt="Add" style="height:25px; align-content: right" />
     </a>
 </div>
 <div>
     <table class="table table-bordered"> 
         <thead>
-            <tr>
+            <tr style="font-weight:600; text-align:center">
                 <td>Customer ID</td>
                 <td>First Name</td>
                 <td>Last Name</td>
