@@ -110,21 +110,7 @@ namespace Intex2.Controllers
 
         //EDIT ORDER
 
-        [HttpGet]
-        public IActionResult Admin_Edit_Order(int id)
-        {
-            var recordToEdit = _repo.AdminEditOrder(id);
 
-            return View(recordToEdit); // Pass the Product directly to the view
-        }
-
-        [HttpPost]
-        public IActionResult Admin_Edit_Order(Order updatedInfo)
-        {
-            _repo.AdminUpdateOrder(updatedInfo); // Update the existing record
-
-            return RedirectToAction("Admin_Orders");
-        }
 
         //DELETE ORDER
         [HttpGet]

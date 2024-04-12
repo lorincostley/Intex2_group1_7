@@ -15,6 +15,7 @@ namespace Intex2.Models
         public IQueryable<Customer> Customers => _context.Customers;
         public IQueryable<Top_Rating> top_Ratings => _context.Top_Ratings;
         public IQueryable<User_Recommendation> user_Recommendations => _context.User_Recommendations;
+        public IQueryable<Recommendation> recommendations => _context.Recommendations;
 
         public void AdminDeleteProduct(Product product)
         {

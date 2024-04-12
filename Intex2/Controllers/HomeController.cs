@@ -60,7 +60,7 @@ namespace Intex2.Controllers
 
             ViewBag.Product = product;
 
-            var rec = _repo.Recommendations
+            var rec = _repo.recommendations
               .Where(x => x.primary_product_ID == id).FirstOrDefault();
 
             int[] recommendationIds =  new[]
