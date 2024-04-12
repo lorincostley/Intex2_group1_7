@@ -47,30 +47,29 @@ namespace Intex2.Controllers
             return View(product);
         }
 
-        public IActionResult ProductList(int pageNum, string? productType)
+        public IActionResult ProductList(int pageNum, string? productType, string color, int pageSize = 5)
         {
-            int pageSize = 9;
+            //int pageSize = 9;
             if (pageNum < 1)
             {
                 pageNum = 1;
             }
-
             var blah = new ProductListViewModel
             {
                 Products = _repo.Products
-                    .Where(x => x.Category == productType || productType == null)
-                    .OrderBy(x => x.Name)
-                    .Skip(pageSize * (pageNum - 1))
-                    .Take(pageSize),
-
+                .Where(x => (x.Category == productType || x.PrimaryColor == color) || (productType == null && color == null))
+                .OrderBy(x => x.Name)
+                .Skip(pageSize * (pageNum - 1))
+                .Take(pageSize),
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = productType == null ? _repo.Products.Count() : _repo.Products.Where(x => x.Category == productType).Count()
+                    TotalItems = (productType == null && color == null) ? _repo.Products.Count() :
+                 _repo.Products.Count(x => (x.Category == productType || x.PrimaryColor == color))
                 },
-
-                CurrentProductType = productType
+                CurrentProductType = productType,
+                CurrentColor = color
             };
             return View(blah);
         }
