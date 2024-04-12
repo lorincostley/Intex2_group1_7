@@ -8,6 +8,10 @@
         padding: 0 20px; /* Add padding on the sides */
         box-sizing: border-box; /* Include padding in the width calculation */
     }
+
+    .align-text-right {
+        text-align: right;
+    }
 </style>
 <br />
 <div class="row">
@@ -26,13 +30,13 @@
 <br />
 <div class="align-text-right">
     <a asp-controller="Admin" asp-action="Admin_Add_Product">
-        <img src="~/Plus.jpg" alt="Add" style="height:25px" />
+        Add Product <img src="~/Plus.jpg" alt="Add" style="height:25px; align-content: right" />
     </a>
 </div>
 <div>
     <table class="table table-bordered">
         <thead>
-            <tr>
+            <tr style="font-weight:600; text-align:center">
                 <td>Product ID</td>
                 <td>Name</td>
                 <td>Year</td>

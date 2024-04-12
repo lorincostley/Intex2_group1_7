@@ -1,20 +1,58 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model OrderPredictionViewModel
 
-@model OrderPredictionViewModel
+<style>
+    .pill-input {
+        border: 1px solid #ccc;
+        border-radius: 30px; /* Adjust the value for desired roundness */
+        padding: 8px 12px;
+        width: 30%; /* Adjust as needed */
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
 
-<div class="container-signup" style="text-align:center">
+    .pill-text-area {
+        border: 1px solid #ccc;
+        border-radius: 30px; /* Adjust the value for desired roundness */
+        padding: 8px 12px;
+        width: 30%; /* Adjust as needed */
+        box-sizing: border-box;
+    }
+
+    .container-help {
+        width: 90%; /* Adjust the width as needed */
+        max-width: 1200px; /* Optional: Set a maximum width for larger screens */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 0 20px; /* Add padding on the sides */
+        box-sizing: border-box; /* Include padding in the width calculation */
+    }
+
+    .form-group {
+        display: inline-block;
+        width: 40%;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container-signup">
     <br />
-    <h1>Checkout</h1>
+    <h1 style="color: #5b64d1; font-weight: bold;">Checkout</h1>
     <br />
     <form asp-controller="Home" asp-action="Predict" method="post">
         <input asp-for="Customer.CustomerId" type="hidden" />
         <br />
         <div>
-            <select id="card" class="pill-input align-left" placeholder="Type of Card" asp-for="Orders.TypeOfCard">
+            <input type="text" class="pill-input" placeholder="Shipping Address Line 1" />
+        </div>
+        <div>
+            <input type="text" class="pill-input" placeholder="Shipping Address Line 2" />
+        </div>
+        <div class="form-group">
+            <input type="text" class="pill-input" placeholder="City" />
+            <input type="text" class="pill-input" placeholder="State" />
+            <input type="text" class="pill-input" placeholder="Zip" />
+        </div>
+        <div>
+            <select id="card" class="pill-input" asp-for="Orders.TypeOfCard">
                 <option value="" selected disabled>Type of Card</option>
                 <option value="Visa">Visa</option>
                 <option value="MasterCard">MasterCard</option>
@@ -22,7 +60,7 @@
         </div>
         <br />
         <div>
-            <select id="bank" class="pill-input align-left" placeholder="Bank" asp-for="Orders.Bank">
+            <select id="bank" class="pill-input" asp-for="Orders.Bank">
                 <option value="" selected disabled>Bank</option>
                 <option value="RBS">RBS</option>
                 <option value="Lloyds">Lloyds</option>
@@ -34,28 +72,23 @@
             </select>
         </div>
         <div>
-            <select id="type" class="pill-input align-left" asp-for="Orders.TypeOfTransaction">
+            <select id="type" class="pill-input" asp-for="Orders.TypeOfTransaction">
                 <option value="Online">Online</option>
             </select>
         </div>
         <div>
-            <select id="mode" class="pill-input-gender align-left" asp-for="Orders.EntryMode">
+            <select id="mode" class="pill-input" asp-for="Orders.EntryMode">
                 <option value="CVV">CVV</option>
             </select>
         </div>
-
-        <div>Total Price: @ViewBag.TotalPrice.ToString("c")</div>
-
-
+        <br />
+        <div style="font-weight: bold;">Total Price: @ViewBag.TotalPrice.ToString("c")</div>
 
         <input asp-for="Orders.Amount" type="hidden" value="@ViewBag.TotalPrice" />
-        
- 
         <input asp-for="Customer.CountryOfResidence" type="hidden" />
 
-
         <br />
-        
-        <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; padding: 10px 20px; font-size: 16px; display: block; margin: 0 auto;" class="rounded-pill">Submit</button>
+
+        <button type="submit" class="rounded-pill">Submit</button>
     </form>
 </div>

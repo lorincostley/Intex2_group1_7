@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Intex2.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Intex2.Models
 {
@@ -12,6 +13,9 @@ namespace Intex2.Models
         public IQueryable<Product> Products => _context.Products;
         public IQueryable<Order> Orders => _context.Orders;
         public IQueryable<Customer> Customers => _context.Customers;
+        public IQueryable<Top_Rating> top_Ratings => _context.Top_Ratings;
+        public IQueryable<User_Recommendation> user_Recommendations => _context.User_Recommendations;
+        public IQueryable<Recommendation> recommendations => _context.Recommendations;
 
         public void AdminDeleteProduct(Product product)
         {
@@ -79,6 +83,14 @@ namespace Intex2.Models
         {
             _context.Orders.Remove(order);
             _context.SaveChanges();
+        }
+
+        public Order AdminEditOrder(int id)
+        {
+            var recordToDelete = _context.Orders
+                .FirstOrDefault(x => x.TransactionId == id);
+
+            return recordToDelete;
         }
     }
 }
