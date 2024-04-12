@@ -13,6 +13,7 @@ namespace Intex2.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Recommendation> Recommendations { get; set; }
         public virtual DbSet<Top_Rating> Top_Ratings { get; set; }
+        public virtual DbSet<Customer_Product> Customer_Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

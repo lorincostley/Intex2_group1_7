@@ -11,10 +11,11 @@ using Microsoft.AspNetCore.Builder;
 using System.Drawing.Text;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
+using Elfie.Serialization;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -110,8 +111,14 @@ internal class Program
 
         builder.Services.AddRazorPages();
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+            })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
         // Add role-based policy
         builder.Services.AddAuthorization(options =>
@@ -174,7 +181,7 @@ internal class Program
         }
 
 
-        string modelPath = "C:\\Users\\kbangerter\\source\\repos\\lorincostley\\Intex2_group1_7\\Intex2\\gradient_model.onnx";
+        string modelPath = "./gradient_model.onnx";
 
         // Load the model
         var sessionOptions = new Microsoft.ML.OnnxRuntime.SessionOptions();
@@ -201,16 +208,16 @@ internal class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
-        //app.Use(async (ctx, next) =>
-        //{
-        //    ctx.Response.Headers.Append("Content-Security-Policy",
-        //    "default-src 'self';" +
-        //    "script-src 'self' https://stackpath.bootstrapcdn.com/ 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=';" +
-        //    "img-src data: https:;" +
-        //    "style-src https://stackpath.bootstrapcdn.com/ 'self' 'unsafe-inline';" +
-        //    "connect-src 'self' wss: http://localhost:52827 ws://localhost:52827");
-        //    await next();
-        //});
+        app.Use(async (ctx, next) =>
+        {
+            ctx.Response.Headers.Append("Content-Security-Policy",
+            "default-src 'self';" +
+            "script-src 'self' https://stackpath.bootstrapcdn.com/ 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=';" +
+            "img-src data: https:;" +
+            "style-src https://stackpath.bootstrapcdn.com/ 'self' 'unsafe-inline';" +
+            "connect-src 'self' wss: http://localhost:52827 ws://localhost:52827");
+            await next();
+        });
 
         app.MapControllerRoute("pagenumandtype", "{projectType}/{pageNum}", new { Conroller = "Home", action = "Index" });
         app.MapControllerRoute("projectType", "{projectType}", new { Controller = "Home", action = "Index", pageNum = 1 });
@@ -218,6 +225,36 @@ internal class Program
         app.MapDefaultControllerRoute();
 
         app.MapRazorPages();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roles = new[] { "Admin", "User" };
+            foreach (var role in roles)
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    IdentityRole roleRole = new IdentityRole(role);
+                    await roleManager.CreateAsync(roleRole);
+                }
+            }
+        }
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string email = "admin@admin.com";
+            string password = "Pa$$word123!";
+            if (await userManager.FindByNameAsync(email) == null)
+            {
+                var user = new IdentityUser();
+                user.UserName = "Admin";
+                user.Email = email;
+                user.UserName = email;
+                await userManager.CreateAsync(user, password);
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
+        }
 
         app.Run();
     }
