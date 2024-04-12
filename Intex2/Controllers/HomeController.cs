@@ -18,14 +18,15 @@ namespace Intex2.Controllers
         private ILegoRepository _repo;
         private readonly InferenceSession _session;
         private readonly string _onnxModelPath;
+        private readonly Cart _cart;
 
-        public HomeController(ILegoRepository temp, IHostEnvironment hostEnvironment)
+        public HomeController(ILegoRepository temp, IHostEnvironment hostEnvironment, Cart cart)
         {
             _repo = temp;
 
             _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "gradient_model.onnx");
             _session = new InferenceSession(_onnxModelPath);
-
+            _cart = cart;
         } 
 
         [Authorize]
@@ -223,7 +224,7 @@ namespace Intex2.Controllers
 
             // Save the order object to the database
             _repo.AddOrder(OrderModel.Orders);
-
+            _cart.Clear();
             return View(view);
         }
 
