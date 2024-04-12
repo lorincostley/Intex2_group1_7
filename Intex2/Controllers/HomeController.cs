@@ -38,26 +38,6 @@ namespace Intex2.Controllers
         {
             return View();
         }
-
-        //public ActionResult ProductDetails(int ProductId, string Name, string ImgLink, int Price, string Description)
-        //{
-
-        //    var product = new Product
-        //    {
-        //        ProductId = ProductId,
-        //        Name = Name,
-        //        ImgLink = ImgLink,
-        //        Price = Price,
-        //        Description = Description
-        //    };
-
-        //    var blah = new ItemRecommendationViewModel
-        //    {
-        //        Products = product,
-        //    };
-
-        //    return View(product);
-        //}
         public IActionResult ProductDetails(int id)
         {
             var product = _repo.Products
