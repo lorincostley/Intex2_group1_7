@@ -12,6 +12,11 @@
     .align-text-right {
         text-align: right;
     }
+
+    .grey-pagination {
+        background-color: grey;
+        color: white; /* Set text color to white for visibility */
+    }
 </style>
 <br />
 <div class="row">
@@ -87,6 +92,6 @@
 </div>
 
 <div page-model="@Model.PaginationInfo" page-action="Admin_Products" page-class-enabled="true"
-     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="grey-pagination"
      class="btn-group pull-right m-1">
 </div> 

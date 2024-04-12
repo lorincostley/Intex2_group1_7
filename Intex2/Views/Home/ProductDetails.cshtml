@@ -57,7 +57,7 @@
                 <!-- Add to Cart form for the main product -->
                 <form id="addToCartForm" method="post" asp-page="/Cart">
                     <input type="hidden" name="ProductId" value="@ViewBag.Product.ProductId" />
-                    <button type="submit" class="btn btn-outline-success">Add to Cart</button>
+                    <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; padding: 10px 20px; font-size: 16px; display: block;" class="rounded-pill">Add to Cart</button>
                 </form>
                 <p class="back-to-home"><a href="@Url.Action("Index", "Home")">Back to Home</a></p>
             </div>

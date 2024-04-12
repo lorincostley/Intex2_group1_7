@@ -52,7 +52,7 @@ namespace Intex2.Infrastructure
                 // Add text for total number of pages
                 TagBuilder totalPagesTag = new TagBuilder("span");
                 totalPagesTag.AddCssClass("total-pages");
-                totalPagesTag.InnerHtml.Append($"   of {PageModel.TotalNumPages} pages");
+                totalPagesTag.InnerHtml.Append($"... of {PageModel.TotalNumPages} pages");
                 result.InnerHtml.AppendHtml(totalPagesTag);
                 output.Content.AppendHtml(result.InnerHtml);
             }
