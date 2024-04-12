@@ -18,7 +18,7 @@
                         @foreach (Product p in Model.Products ?? Enumerable.Empty<Product>())
                         {
                             <div class="col mb-5">
-                                <a href="@Url.Action("ProductDetails", "Home", new { ProductId = p.ProductId, Name = p.Name, ImgLink = p.ImgLink, Price = p.Price, Description = p.Description})" class="card-link">
+                                <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@p.ProductId" asp-route-Name="@p.Name" asp-route-ImgLink="@p.ImgLink" asp-route-Price="@p.Price" asp-route-Description="@p.Description" class="card-link">
                                     <div class="card h-100 border-0">
                                         <partial name="ProductSummary" model="p" />
                                     </div>
