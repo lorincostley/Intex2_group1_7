@@ -43,34 +43,19 @@ namespace Intex2.Infrastructure
                 IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
                 TagBuilder result = new TagBuilder("div");
 
-                int startPage = Math.Max(1, PageModel.CurrentPage - LinksToShow / 2);
-                int endPage = Math.Min(PageModel.TotalNumPages, startPage + LinksToShow - 1);
-
-                for (int i = startPage; i <= endPage; i++)
                 {
                     TagBuilder tag = new TagBuilder("a");
                     PageUrlValues["pageNum"] = i;
+                    PageUrlValues["pageSize"] = PageModel.ItemsPerPage;
                     tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
-
                     if (PageClassEnabled)
                     {
                         tag.AddCssClass(PageClass);
                         tag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
                     }
-
                     tag.InnerHtml.Append(i.ToString());
                     result.InnerHtml.AppendHtml(tag);
                 }
 
-                // Add text for total number of pages
-                TagBuilder totalPagesTag = new TagBuilder("span");
-                totalPagesTag.AddCssClass("total-pages");
-                totalPagesTag.InnerHtml.Append($"   of {PageModel.TotalNumPages} pages");
-
-                result.InnerHtml.AppendHtml(totalPagesTag);
-
-                output.Content.AppendHtml(result.InnerHtml);
-            }
-        }
     }
 }

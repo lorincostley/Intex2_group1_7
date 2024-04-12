@@ -47,30 +47,29 @@ namespace Intex2.Controllers
             return View(product);
         }
 
-        public IActionResult ProductList(int pageNum, string? productType)
+        public IActionResult ProductList(int pageNum, string? productType, string color, int pageSize = 5)
         {
-            int pageSize = 9;
+            //int pageSize = 9;
             if (pageNum < 1)
             {
                 pageNum = 1;
             }
-
             var blah = new ProductListViewModel
             {
                 Products = _repo.Products
-                    .Where(x => x.Category == productType || productType == null)
-                    .OrderBy(x => x.Name)
-                    .Skip(pageSize * (pageNum - 1))
-                    .Take(pageSize),
-
+                .Where(x => (x.Category == productType || x.PrimaryColor == color) || (productType == null && color == null))
+                .OrderBy(x => x.Name)
+                .Skip(pageSize * (pageNum - 1))
+                .Take(pageSize),
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = productType == null ? _repo.Products.Count() : _repo.Products.Where(x => x.Category == productType).Count()
+                    TotalItems = (productType == null && color == null) ? _repo.Products.Count() :
+                 _repo.Products.Count(x => (x.Category == productType || x.PrimaryColor == color))
                 },
-
-                CurrentProductType = productType
+                CurrentProductType = productType,
+                CurrentColor = color
             };
             return View(blah);
         }
@@ -78,10 +77,22 @@ namespace Intex2.Controllers
         [HttpPost]
         public IActionResult Predict(OrderPredictionViewModel OrderModel)
         {
+            
+            int id = _repo.Orders.Max(order => order.TransactionId);
 
-            int id = OrderModel.Customer.CustomerId;
+            id++;
+            
+            OrderModel.Orders.TransactionId = id;
 
-            OrderModel.Orders.CustomerId = id;
+            if (OrderModel.Orders.CustomerId == null)
+            {
+                OrderModel.Orders.CustomerId = 29135;
+            }
+
+
+            string country = OrderModel.Customer.CountryOfResidence;
+            OrderModel.Orders.ShippingAddress = country;
+
 
             // Get the current date and time
             DateTime now = DateTime.Now;
@@ -98,7 +109,10 @@ namespace Intex2.Controllers
             OrderModel.Orders.Time = time;
             OrderModel.Orders.DayOfWeek = day;
 
-            
+            string place = "USA";
+
+            OrderModel.Orders.CountryOfTransaction = place;
+
             var input = new List<float>
                 {
                     (float)time,
@@ -136,7 +150,7 @@ namespace Intex2.Controllers
                     OrderModel.Orders.Bank == "Metro" ? 1 : 0,
                     OrderModel.Orders.Bank == "Monzo" ? 1 : 0,
                     OrderModel.Orders.Bank == "RBS" ? 1 : 0,
-                    OrderModel.Orders.Bank == "RBS" ? 1 : 0,
+
 
                     OrderModel.Orders.TypeOfCard == "Visa" ? 1 : 0,
             };
@@ -157,13 +171,19 @@ namespace Intex2.Controllers
             using (var results = _session.Run(inputs)) // makes the prediction with the inputs from the form (i.e. class_type 1-7)
             {
                 var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
-                var fraudprediction = (int)prediction[0];
-
-                if (fraudprediction == 1)
+                if (prediction != null)
                 {
-                    view = "Confirmation_NeedsVerification";
+                    var fraudprediction = (int)prediction[0];
+
+                    if (fraudprediction == 1)
+                    {
+                        view = "Confirmation_NeedsVerification";
+                        OrderModel.Orders.Fraud = 1;
+                    }
+                    else {OrderModel.Orders.Fraud = 0; }
                 }
-            OrderModel.Orders.Fraud = fraudprediction;
+                else { OrderModel.Orders.Fraud = 0; }
+
             }
 
 
@@ -328,33 +348,11 @@ namespace Intex2.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Checkout()
+        public IActionResult Checkout(decimal? totalPrice)
         {
-/*            // Get the current date and time
-            DateTime now = DateTime.Now;
-
-            // Format the date in the "1/1/2022" format
-            string dateOnly = now.ToString("M/d/yyyy");
-
-            // Get the day of the week (e.g., "Tues")
-            string dayOfWeek = now.ToString("ddd");
-
-            // Get the time as an integer (e.g., 13 for 1:00 PM)
-            int timeAsInteger = now.Hour;
-
-            Order order = new Order
-            {
-                Date = dateOnly,
-                DayOfWeek = dayOfWeek,
-                Time = timeAsInteger
-            };
-
-            // Save the order object to the database
-            _repo.Order.Add(order);
-            _repo.SaveChanges();*/
-
+            // Use totalPrice as needed
+            ViewBag.TotalPrice = totalPrice;
             return View();
-
         }
     }
 }
