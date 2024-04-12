@@ -77,10 +77,18 @@ namespace Intex2.Controllers
         [HttpPost]
         public IActionResult Predict(OrderPredictionViewModel OrderModel)
         {
+            
+            int id = _repo.Orders.Max(order => order.TransactionId);
 
-            int id = 3000;
+            id++;
+            
+            OrderModel.Orders.TransactionId = id;
 
-            OrderModel.Orders.CustomerId = id;
+            if (OrderModel.Orders.CustomerId == null)
+            {
+                OrderModel.Orders.CustomerId = 29135;
+            }
+
 
             string country = OrderModel.Customer.CountryOfResidence;
             OrderModel.Orders.ShippingAddress = country;
@@ -170,9 +178,12 @@ namespace Intex2.Controllers
                     if (fraudprediction == 1)
                     {
                         view = "Confirmation_NeedsVerification";
+                        OrderModel.Orders.Fraud = 1;
                     }
+                    else {OrderModel.Orders.Fraud = 0; }
                 }
-            OrderModel.Orders.Fraud = 0;
+                else { OrderModel.Orders.Fraud = 0; }
+
             }
 
 
