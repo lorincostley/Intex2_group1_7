@@ -9,6 +9,7 @@ using Humanizer;
 using Microsoft.AspNetCore.Http;
 using System.Drawing.Printing;
 using System.Drawing;
+using Microsoft.AspNetCore.Identity;
 
 namespace Intex2.Controllers 
 {
@@ -19,14 +20,16 @@ namespace Intex2.Controllers
         private readonly InferenceSession _session;
         private readonly string _onnxModelPath;
         private readonly Cart _cart;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILegoRepository temp, IHostEnvironment hostEnvironment, Cart cart)
+        public HomeController(ILegoRepository temp, IHostEnvironment hostEnvironment, Cart cart, UserManager<IdentityUser> userManager)
         {
             _repo = temp;
 
             _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "gradient_model.onnx");
             _session = new InferenceSession(_onnxModelPath);
             _cart = cart;
+            _userManager = userManager;
         } 
 
         [Authorize]
@@ -228,9 +231,10 @@ namespace Intex2.Controllers
             return View(view);
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            if (User. = 4)
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user != null && user.Email == "legomasterBETH@example.com")
             {
                 var blah = new ProductRecommendViewModel
                 {
@@ -249,7 +253,7 @@ namespace Intex2.Controllers
                 };
 
                 return View(blah);
-            //}
+            }
         }
 
         public IActionResult Privacy()
