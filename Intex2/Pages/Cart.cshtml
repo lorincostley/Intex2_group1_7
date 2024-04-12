@@ -96,7 +96,7 @@
 </div>
     <div style="font-weight:bold">Total:</div>
     <div>@Model.Cart?.CalculateTotal().ToString("c")</div>
-        <form method="post" action="/Home/Checkout">
+        <form method="post" action="/Home/Checkout?totalPrice=@Model.Cart?.CalculateTotal()">
             <button style="color: #5b64d1;" type="submit" class="rounded-pill">Checkout</button>
         </form>
     </div>
