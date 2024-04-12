@@ -18,14 +18,15 @@ namespace Intex2.Controllers
         private ILegoRepository _repo;
         private readonly InferenceSession _session;
         private readonly string _onnxModelPath;
+        private readonly Cart _cart;
 
-        public HomeController(ILegoRepository temp, IHostEnvironment hostEnvironment)
+        public HomeController(ILegoRepository temp, IHostEnvironment hostEnvironment, Cart cart)
         {
             _repo = temp;
 
             _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "wwwroot\\wwwroot\\gradient_model.onnx");
             _session = new InferenceSession(_onnxModelPath);
-
+            _cart = cart;
         } 
 
         [Authorize]
@@ -223,24 +224,24 @@ namespace Intex2.Controllers
 
             // Save the order object to the database
             _repo.AddOrder(OrderModel.Orders);
-
+            _cart.Clear();
             return View(view);
         }
 
         public IActionResult Index()
         {
-            //if(User = 4)
-            //{
-            //    var blah = new ProductRecommendViewModel
-            //    {
-            //        Products = _repo.Products
-            //                   .Where(x => _repo.user_Recommendations.Select(tr => tr.product_ID).Contains(x.ProductId))
-            //    };
+            if (User. = 4)
+            {
+                var blah = new ProductRecommendViewModel
+                {
+                    Products = _repo.Products
+                               .Where(x => _repo.user_Recommendations.Select(tr => tr.product_ID).Contains(x.ProductId))
+                };
 
-            //    return View(blah);
-            //}
-            //else
-            //{
+                return View(blah);
+            }
+            else
+            {
                 var blah = new ProductRecommendViewModel
                 {
                     Products = _repo.Products
@@ -400,6 +401,7 @@ namespace Intex2.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [Authorize]
         public IActionResult Checkout(decimal? totalPrice)
         {
             // Use totalPrice as needed
