@@ -78,6 +78,7 @@
                                     <h5 class="card-title">@recommendation.Name</h5>
                                     <p>Price: $@recommendation.Price</p>
                                     <p>Description: @recommendation.Description</p>
+                                    <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@recommendation.ProductId" asp-route-Name="@ViewBag.Name" asp-route-ImgLink="@ViewBag.ImgLink" asp-route-Price="@ViewBag.Price" asp-route-Description="@ViewBag.Description" class="card-link">View Details</a>
                                 </div>
                             </div>
                         </div>
