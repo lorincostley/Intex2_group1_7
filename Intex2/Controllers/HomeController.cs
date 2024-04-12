@@ -229,18 +229,18 @@ namespace Intex2.Controllers
 
         public IActionResult Index()
         {
-            //if(User = 4)
-            //{
-            //    var blah = new ProductRecommendViewModel
-            //    {
-            //        Products = _repo.Products
-            //                   .Where(x => _repo.user_Recommendations.Select(tr => tr.product_ID).Contains(x.ProductId))
-            //    };
+            if (User. = 4)
+            {
+                var blah = new ProductRecommendViewModel
+                {
+                    Products = _repo.Products
+                               .Where(x => _repo.user_Recommendations.Select(tr => tr.product_ID).Contains(x.ProductId))
+                };
 
-            //    return View(blah);
-            //}
-            //else
-            //{
+                return View(blah);
+            }
+            else
+            {
                 var blah = new ProductRecommendViewModel
                 {
                     Products = _repo.Products
