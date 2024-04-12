@@ -47,7 +47,7 @@
          page-class-normal="btn-outline-dark" page-class-selected="btn-primary" page-url-category="@Model.CurrentProductType!" page-url-color="@Model.CurrentColor!">
     </div>
 </div>
-<script>
+<script nonce="ranDom">
     // JavaScript to handle changing the page size
     document.addEventListener("DOMContentLoaded", function () {
         var pageSizeDropdown = document.getElementById("pageSize");
@@ -65,6 +65,7 @@
         setSelectedPageSize();
         // Event listener for when the page size changes
         pageSizeDropdown.addEventListener("change", function () {
+            console.log("Page size changed:", this.value); // Log the new page size value
             var pageSize = this.value;
             updatePageSize(pageSize);
         });
@@ -75,6 +76,7 @@
         var url = new URL(currentPageUrl);
         url.searchParams.set('pageSize', pageSize);
         url.searchParams.delete('productPage'); // Remove productPage parameter to clean up the URL
+        console.log("Updated URL:", url.toString()); // Log the updated URL
         window.location.href = url.toString();
     }
 </script>

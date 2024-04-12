@@ -196,10 +196,10 @@ internal class Program
         {
             ctx.Response.Headers.Append("Content-Security-Policy",
             "default-src 'self';" +
-            "script-src 'self' https://stackpath.bootstrapcdn.com/ 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=';" +
+            "script-src 'self' https://stackpath.bootstrapcdn.com/ 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=' 'unsafe-inline' 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU=' 'nonce-ranDom';" +
             "img-src data: https:;" +
             "style-src https://stackpath.bootstrapcdn.com/ 'self' 'unsafe-inline';" +
-            "connect-src 'self' wss: http://localhost:52827 ws://localhost:52827");
+            "connect-src 'self' wss: localhost:" );
             await next();
         });
 
