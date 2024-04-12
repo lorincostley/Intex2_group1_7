@@ -12,7 +12,7 @@ using System.Reflection.Metadata;
 
 namespace Intex2.Controllers
 {
-    //[Authorize(Policy = "RequireAdministratorRole")]
+    [Authorize(Policy = "RequireAdminRole")]
     public class AdminController : Controller
     {
         private ILegoRepository _repo;

@@ -153,8 +153,8 @@ internal class Program
         // Add role-based policy
         builder.Services.AddAuthorization(options =>
         {
-            options.AddPolicy("RequireAdministratorRole",
-                 policy => policy.RequireRole("Administrator"));
+            options.AddPolicy("RequireAdminRole",
+                 policy => policy.RequireRole("Admin"));
         });
 
         builder.Services.AddHsts(options =>
@@ -233,22 +233,6 @@ internal class Program
                     IdentityRole roleRole = new IdentityRole(role);
                     await roleManager.CreateAsync(roleRole);
                 }
-            }
-        }
-
-        using (var scope = app.Services.CreateScope())
-        {
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            string email = "admin@admin.com";
-            string password = "Pa$$word123!";
-            if (await userManager.FindByNameAsync(email) == null)
-            {
-                var user = new IdentityUser();
-                user.UserName = "Admin";
-                user.Email = email;
-                user.UserName = email;
-                await userManager.CreateAsync(user, password);
-                await userManager.AddToRoleAsync(user, "Admin");
             }
         }
 
