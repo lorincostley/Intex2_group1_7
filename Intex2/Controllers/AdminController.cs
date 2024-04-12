@@ -2,11 +2,13 @@
 using Intex2.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using NuGet.ProjectModel;
 using NuGet.Protocol.Core.Types;
 using System.Drawing.Printing;
+using System.Reflection.Metadata;
 
 namespace Intex2.Controllers
 {
@@ -16,10 +18,11 @@ namespace Intex2.Controllers
         private ILegoRepository _repo;
         private readonly InferenceSession _session;
         private readonly string _onnxModelPath;
-
-        public AdminController(ILegoRepository temp, IHostEnvironment hostEnvironment)
+        private LegoContext _context;
+        public AdminController(ILegoRepository temp, IHostEnvironment hostEnvironment, LegoContext context)
         {
             _repo = temp;
+            _context = context;
 
             _onnxModelPath = System.IO.Path.Combine(hostEnvironment.ContentRootPath, "gradient_model.onnx");
             _session = new InferenceSession(_onnxModelPath);
@@ -28,33 +31,12 @@ namespace Intex2.Controllers
 
         public IActionResult Admin_Orders(int pageNum)
         {
-            //int pageSize = 20;
-            //if (pageNum < 1)
-            //{
-            //    pageNum = 1;
-            //}
-            //var products = _repo.Orders.ToList();
-            //var viewModel = new AdminViewModel
-            //{
-            //    Orders = _repo.Orders
-            //                .OrderBy(x => x.TransactionId)
-            //                .Skip(pageSize * (pageNum - 1))
-            //                .Take(pageSize),
 
-            //    PaginationInfo = new PaginationInfo
-            //    {
-            //        CurrentPage = pageNum,
-            //        ItemsPerPage = pageSize,
-            //        TotalItems = _repo.Products.Count()
-            //    },
-            //};
-
-            //return View(viewModel);
             var records = _repo.Orders
-    .OrderByDescending(o => o.Date)
-    .Take(150)
-    .ToList();
-            var predictions = new List<OrderPredictionViewModel>(); //Viewmodel for the view
+                .OrderByDescending(o => o.Date)
+                .Take(150)
+                .ToList();
+            var predictions = new List<OrderPredictionViewModel>(); 
 
             var class_type_dict = new Dictionary<int, string>
             {
@@ -126,12 +108,44 @@ namespace Intex2.Controllers
             return View(predictions);
         }
 
+        //EDIT ORDER
+
+        [HttpGet]
+        public IActionResult Admin_Edit_Order(int id)
+        {
+            var recordToEdit = _repo.Orders.SingleOrDefault(x => x.TransactionId == id);
+
+            if (recordToEdit == null)
+            {
+                return NotFound(); // Return a 404 Not Found response if no record is found
+            }
+
+            return View(recordToEdit); // Pass the record directly to the view
+        }
+
+        [HttpPost]
+        public IActionResult Admin_Edit_Order(Order updatedInfo)
+        {
+            var existingRecord = _repo.Orders.SingleOrDefault(x => x.TransactionId == updatedInfo.TransactionId);
+
+            if (existingRecord == null)
+            {
+                return NotFound(); // Return a 404 Not Found response if no record is found
+            }
+
+            _repo.AdminUpdateOrder(updatedInfo); // Update the existing record
+
+            return RedirectToAction("Admin_Orders");
+        }
+
+
+
         //--------------------------------------------------------------------------------
 
         // PRODUCTS CONTROLLERS
         public IActionResult Admin_Products(int pageNum)
         {
-            int pageSize = 20;
+            int pageSize = 5;
             if (pageNum < 1)
             {
                 pageNum = 1;
@@ -198,29 +212,34 @@ namespace Intex2.Controllers
             return RedirectToAction("Admin_Products");
         }
 
-[HttpGet]
-public IActionResult Admin_Add_Product()
-{
-    // Create a new instance of Product to pass to the view
-    var newProduct = new Product();
-    return View(newProduct);
-}
+        [HttpGet]
+        public IActionResult Admin_Add_Product()
+        {
+            // Create a new instance of Product to pass to the view
+            var newProduct = new Product();
+            return View(newProduct);
+        }
 
-// POST: Handle the form submission for adding a new product
-[HttpPost]
-public IActionResult Admin_Add_Product(Product newProduct)
-{
-    if (ModelState.IsValid)
-    {
-        _repo.AddProduct(newProduct); // Add the new product to the repository
-        return RedirectToAction("Admin_Products"); // Redirect to the product list page
-    }
-    else
-    {
-        // If the model state is not valid, return the view with validation errors
-        return View(newProduct);
-    }
-}
+        // POST: Handle the form submission for adding a new product
+        [HttpPost]
+        public IActionResult Admin_Add_Product(Product newProduct)
+        {
+            //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Products ON");
+            if (ModelState.IsValid)
+            {
+                _repo.AddProduct(newProduct); // Add the new product to the repository
+                //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Products OFF");
+
+                return RedirectToAction("Admin_Products"); // Redirect to the product list page
+            }
+            else
+            {
+                // If the model state is not valid, return the view with validation errors
+                //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Products OFF");
+
+                return View(newProduct);
+            }
+        }
 
 
         //--------------------------------------------------------------------------------
@@ -287,6 +306,31 @@ public IActionResult Admin_Add_Product(Product newProduct)
             _repo.AdminUpdateCustomer(updatedInfo);
 
             return RedirectToAction("Admin_Users");
+        }
+
+        //ADD USER
+        [HttpGet]
+        public IActionResult Admin_Add_User()
+        {
+            // Create a new instance of Customer to pass to the view
+            var newCustomer = new Customer();
+            return View(newCustomer);
+        }
+
+        // POST: Handle the form submission for adding a new product
+        [HttpPost]
+        public IActionResult Admin_Add_User(Customer newCustomer)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddCustomer(newCustomer); // Add the new product to the repository
+                return RedirectToAction("Admin_Users"); // Redirect to the product list page
+            }
+            else
+            {
+                // If the model state is not valid, return the view with validation errors
+                return View(newCustomer);
+            }
         }
 
         //--------------------------------------------------------------------------------

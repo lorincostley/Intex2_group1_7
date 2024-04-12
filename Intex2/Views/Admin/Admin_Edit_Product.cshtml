@@ -1,34 +1,61 @@
 ﻿@model Product
 
+<style>
+    .pill-input {
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        padding: 8px 12px;
+        width: 70%;
+        box-sizing: border-box;
+        margin-bottom: 10px; /* Add margin bottom for spacing between input fields */
+    }
+
+    .pill-text-area {
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        padding: 8px 12px;
+        width: 70%;
+        box-sizing: border-box;
+        margin-bottom: 10px; /* Add margin bottom for spacing between input fields */
+    }
+</style>
+
 <form method="post">
     <input asp-for="ProductId" type="hidden" />
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Year</th>
-                <th># of Parts</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Primary Color</th>
-                <th>Secondary Color</th>
-                <th>Description</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input asp-for="Name" /></td>
-                <td><input asp-for="Year" /></td>
-                <td><input asp-for="NumParts" /></td>
-                <td><input asp-for="Price" /></td>
-                <td><input asp-for="ImgLink" /></td>
-                <td><input asp-for="PrimaryColor" /></td>
-                <td><input asp-for="SecondaryColor" /></td>
-                <td><textarea asp-for="Description"></textarea></td>
-                <td><input asp-for="Category" /></td>
-            </tr>
-        </tbody>
-    </table>
-    <button type="submit">Submit Product</button>
+    <div class="row container-help">
+        <div>
+            <br />
+            <h1 style="font-weight:bold; color: #5b64d1">Edit Product</h1>
+            <br />
+            <div class="label-text">Name</div>
+            <input asp-for="Name" class="pill-input" placeholder="Name" />
+            <br />
+            <div class="label-text">Year</div>
+            <input asp-for="Year" class="pill-input" placeholder="Year" />
+            <br />
+            <div class="label-text"># of Parts</div>
+            <input asp-for="NumParts" class="pill-input" placeholder="# of Parts" />
+            <br />
+            <div class="label-text">Price</div>
+            <input asp-for="Price" class="pill-input" placeholder="Price" />
+            <br />
+            <div class="label-text">Image Link</div>
+            <input asp-for="ImgLink" class="pill-input" placeholder="Image Link" />
+            <br />
+            <div class="label-text">Primary Color</div>
+            <input asp-for="PrimaryColor" class="pill-input" placeholder="Primary Color" />
+            <br />
+            <div class="label-text">Secondary Color</div>
+            <input asp-for="SecondaryColor" class="pill-input" placeholder="Secondary Color" />
+            <br />
+            <div class="label-text">Description</div>
+            <textarea asp-for="Description" class="pill-text-area" placeholder="Description" rows="8"></textarea>
+            <br />
+            <div class="label-text">Category</div>
+            <input asp-for="Category" class="pill-input" placeholder="Category" />
+            <br />
+            <button type="submit" style="background-color: #5b64d1; color: white; font-weight: bold; padding: 10px 20px; font-size: 16px; display: block; margin: 0 auto;" class="rounded-pill">Save Edit</button>
+        </div>
+    </div>
 </form>
+<br />

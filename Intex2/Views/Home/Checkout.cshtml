@@ -10,11 +10,11 @@
     <br />
     <h1>Checkout</h1>
     <br />
-    <form>
+    <form asp-controller="Home" asp-action="Predict" method="post">
         <input asp-for="Customer.CustomerId" type="hidden" />
         <br />
         <div>
-            <select id="card" class="pill-input align-left" placeholder="Type of Card">
+            <select id="card" class="pill-input align-left" placeholder="Type of Card" asp-for="Orders.TypeOfCard">
                 <option value="" selected disabled>Type of Card</option>
                 <option value="Visa">Visa</option>
                 <option value="MasterCard">MasterCard</option>
